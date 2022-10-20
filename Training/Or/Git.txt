@@ -24,3 +24,13 @@ init - let us open a new repo, empty or full of the content in our directory
 git is the best version control system becuase of the "blame" command,
 and of course we can't forget about the infamous merge-conflit duo,
 that can kill the mood of a programmer in an instant
+
+6)
+blob - a git blog a a type, it is the type of object which stores the contents of wach file in the repository
+    the files SHA-1 hash is stored in the blob object
+tree - the tree object creates the hierarchy beetween the files in the repo
+    basicly the folder counter part of blob
+commit - a snapshot is a commit, a commit includes a pointer to the main tree, and other metadata
+branch - a branch is a pointer to a commit, the defualt branch name is master
+tag - tags are a refrences that point to a specific point in git history, a tag is like a version that doesn't change,
+    unlike branches after a tag is created it has no further history of commits
