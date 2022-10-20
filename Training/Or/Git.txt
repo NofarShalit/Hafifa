@@ -1,4 +1,5 @@
 GIT
+1)
 clone - מעתיק repository לתוך תיקייה חדשה, ויוצר branch מרוחק לכל branch שיש בrepository
 add - הפקודה add מוסיפה את השינויים שנעשו לתוך הstaging area, מעין מיקום בין מה העורכים עכשיו למה ששמור בgit, הוא אומר לgit שאנחנו רוציפ להכניס עדכון מסויים בcommit הבא
 commit - תופס snapshot של המצב הנוכחי של הפרוייקט ומעלה אותו לgit, git לא ישנה snapshotים אלא אם מבקשים ממנו
@@ -18,3 +19,8 @@ pull - downloades the remote repo to the local repo and update it to match
 fetch - downloades the remote repo to the local repo without updating
 checkout - let us work on different versions branches, and updates the directory to match the version in the remote branch we choose
 init - let us open a new repo, empty or full of the content in our directory
+
+3)
+git is the best version control system becuase of the "blame" command,
+and of course we can't forget about the infamous merge-conflit duo,
+that can kill the mood of a programmer in an instant
