@@ -1,0 +1,20 @@
+GIT
+clone - מעתיק repository לתוך תיקייה חדשה, ויוצר branch מרוחק לכל branch שיש בrepository
+add - הפקודה add מוסיפה את השינויים שנעשו לתוך הstaging area, מעין מיקום בין מה העורכים עכשיו למה ששמור בgit, הוא אומר לgit שאנחנו רוציפ להכניס עדכון מסויים בcommit הבא
+commit - תופס snapshot של המצב הנוכחי של הפרוייקט ומעלה אותו לgit, git לא ישנה snapshotים אלא אם מבקשים ממנו
+push - מעלה את הrepository הלוקאלי אל הrepository המרוחק
+pull - מוריד את הrepository המרוחק אל הrepository הלוקאלי ומעדכן אותו בכדי שהתוכן יהיה תואם
+fetch - מוריד תוכן מrepository מרוחק אל הrepository המקומי מבלי לעדכן
+checkout - נותן לנו לעבוד על גרסאות שונות של branches ומעדכן את תוכן התיקייה בכדי שיהיה תואם לbranch שאנו בחרנו
+init - נותן לנו לפתוח repository חדש, ריק או מלא בתוכן שבחרנו
+
+clone - copies a repository into a new directory, and creates a remote branch for every branch in the repository
+add - adding the changes made into the staging area, a place beetween what is being edited now and what is on git,
+    it tells git we want to add an update in the next commit
+commit - takes a snapshot of the current state of the project and uploades it to git,
+     git will not change snapshots unless we tell it to
+push - uploades the local repo to the remote repository
+pull - downloades the remote repo to the local repo and update it to match
+fetch - downloades the remote repo to the local repo without updating
+checkout - let us work on different versions branches, and updates the directory to match the version in the remote branch we choose
+init - let us open a new repo, empty or full of the content in our directory
