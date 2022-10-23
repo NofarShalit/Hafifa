@@ -1,2 +1,27 @@
 SMB
 1)
+The SMB message is built from 3 parts:
+1. The Header - the smb header contain a few part:
+  Protocol - this section contains 4 bytes and will always be " '\xFF','S','M','B' " in this order
+  Command - a 1 byte command code
+  Status - a 4 byte field for the server to communicate the errors to the client
+  Flags - a 8 bit field for 8 1-bit flags that describe features affecting the message
+  Flags2 - a 16 bit field for 16 1-bit flags that describe features affecting the message, unspecified bits are reserved and must be zero
+  PIDHigh - a 2 byte field that if set to non zero represent the high-order bytes of a PID, combine with PIDLow to get full PID
+  SecurityFeatures - this field has 3 possible interpretation:
+    If security signatures are negotiated there is an 8 1-byte field for this.
+    If SMB signing is negotiated this field contains a 8 byte cryptographic message signature that help to check if the data has been modified in transit
+    If CIFS is being transported than the field will be structured with " Key, CID, SequenceNumber "
+      Key - a 4 byte field with an encryption key used for contactless transport
+      CID - a 2 byte field with connection identifier
+      SequenceNumber - a 2 byte field with numbers to identify the sequence of message over contactless transport
+    If no case applies this field is reserved and set to zero
+  Reserved - a reserved 2 byte field that should be set to zero
+  TID - a 2 byte tree identifier
+  PIDLow - the lower 16 bit of the pid
+  UID - a 2 byte field with user identifier information
+  MID - a 2 byte field with multiplex identifier
+2. Parameter Block - the parameter block contains 2 parts:
+  WordCount - a 1 byte field containing the size of the Word array, this field can be zero if the words field is empty
+  Words - the parameter structure of the message, the size of this field must be 2*WordCount in bytes
+3. 
