@@ -27,3 +27,5 @@ The SMB message is built from 3 parts:
 3. Data Block - similar structur to the parameter block
   ByteCount - a filed of 2 bytes containing the size of the Bytes array, this field can be zero indicating that the Bytes field is empty
   Bytes - the data structure of the message, this field must be the size of ByteCount in bytes, if BytesCount is zero this field is ignored
+
+2) 
