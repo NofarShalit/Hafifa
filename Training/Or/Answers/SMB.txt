@@ -24,4 +24,6 @@ The SMB message is built from 3 parts:
 2. Parameter Block - the parameter block contains 2 parts:
   WordCount - a 1 byte field containing the size of the Word array, this field can be zero if the words field is empty
   Words - the parameter structure of the message, the size of this field must be 2*WordCount in bytes
-3. 
+3. Data Block - similar structur to the parameter block
+  ByteCount - a filed of 2 bytes containing the size of the Bytes array, this field can be zero indicating that the Bytes field is empty
+  Bytes - the data structure of the message, this field must be the size of ByteCount in bytes, if BytesCount is zero this field is ignored
