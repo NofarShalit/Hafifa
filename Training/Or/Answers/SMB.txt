@@ -15,4 +15,9 @@ The SMB message is built from 3 parts:
       Key - a 4 byte field with an encryption key used for contactless transport
       CID - a 2 byte field with connection identifier
       SequenceNumber - a 2 byte field with numbers to identify the sequence of message over contactless transport
-  If no 
+    If no case applies this field is reserved and set to zero
+  Reserved - a reserved 2 byte field that should be set to zero
+  TID - a 2 byte tree identifier
+  PIDLow - the lower 16 bit of the pid
+  UID - a 2 byte field with user identifier information
+  MID - a 2 byte field with multiplex identifier
