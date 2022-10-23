@@ -28,4 +28,12 @@ The SMB message is built from 3 parts:
   ByteCount - a filed of 2 bytes containing the size of the Bytes array, this field can be zero indicating that the Bytes field is empty
   Bytes - the data structure of the message, this field must be the size of ByteCount in bytes, if BytesCount is zero this field is ignored
 
-2) 
+2) An SMB Relay attack is when an attacker intercepts the NTLMv2 communication between a client and a server,
+  the attacker lets the victim go through the normal authentication process and intercepts when the server sends the
+  final authentication packet to let the victim know it has succsesfully authenticated, the attacker takes the packet
+  for himself and can now communicate with the server, meanwhile the attacker tells the victim it has succsesfully authenticated,
+  and relays all of his traffic through him to the server, and vice versa, and so he can see all communications beetween 
+  the victim and attacker.
+  TL:DR - MiTM attack of NTLMv2 Protocol
+
+3) 
