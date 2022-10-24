@@ -2,4 +2,35 @@ SomeHTTP
 1) The server IP address is 212.58.246.91, since the server is the one who sends the SYN,ACK packet
 2) Inside the GET HTTP packet we can see the Host field: "Host: www.bbc.co.uk"
 3) Inside the POST HTTP packet we can see the Status Code field: "Status Code: 302"
-4) 
+4) The FQDN the server redirect to is in the location field: "Location: https://hotspot.inmarsat.com/index?origUrl=http%3A%2F%2Fwww.bbc.co.uk%2F"
+    specificly the first part "https://hotspot.inmarsat.com/"
+5) 1 packet has a FIN flag set, packet number 7 has FIN,ACK flag
+
+Bad Address
+1) Using statistics->endpoints->ethernet option, we can see we have 3 MAC addresses that aren't broadcast
+2) The usage of bootp in the filter gives us warning becuase bootp is deprecated and got replaced by dhcp
+    the warning tells us to see the users guide
+3) The offered IP address the client recieved is found in the Destination Address field: "Destination Address: 172.16.0.100"
+4) The client declined all IP addresses offered to him, therefore he did not accept an IP address
+5) The client keeps requesting IP addresses becuase each time he is offered an address it is the same address,
+    and the client doesn't want this address so he sends a DHCP request packets again and again
+
+SMBForce
+1) There are 3 SMB servers in the network, we can check and see that 3 IP addresses has sent a browser packet,
+    which can tell us with it's flags if the source IP address is a server, in the server type field,
+    there is a Server flag ".... .... .... .... .... .... .... ..1. = Server: This is a Server",
+    10.1.1.1, 10.1.1.2, 10.1.1.3 are servers
+
+2) Looking through statistics->conversations->IPv4 and turning on name resolution we can see an address resolves to
+    "TIEFIGHTER.outerrim.local" and resolves to 10.20.20.20
+
+3) Filtering by the attacker IP address and by "ntlmssp" we can see the ntlm packets,
+    and in the Sesseion ID field we can see [Account: drk-1] [Domain: OUTERRIM] [Host: TIEFIGHTER],
+    so we can tell that the attacker user is drk-1 in the domain OUTERRIM
+
+4) Inside the negotiate protocol in requested dialects, in the Diqalect field we can see: "Dialect: SMB 2.002",
+    and so the tie fighter is using SMBv2
+
+5) Filtering for kerberos in wireshark can give us the user of drk-1, since in the kerberos authentication protocol,
+    the client needs to send hes user and password hash to authenticate, so wireshark captures the username in the packet,
+    and if we follow the TGS-REP we can see hes name in the cname field: "CNameString: luke.skywalker"
