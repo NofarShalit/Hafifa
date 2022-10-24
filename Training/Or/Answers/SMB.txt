@@ -57,3 +57,9 @@ The SMB message is built from 3 parts:
   when trying to connect to an IP address instead of a SPN (domain name (10.0.0.255  instead of "MOSHE-PC-1")),
   when DNS server isn't present or reachable NTLM is used, and for everything outside of the domain, even if one side is in a domain,
   TL:DR - kerberos will be used if SPN is used to connect, DNS server is present, both computers are inside the same domain, and remote authentication is used
+
+6) NTLM will be used if one or more criteria isn't met:
+  - SPN isn't used (IP addresses are used instead)
+  - DNS server isn't reachable
+  - one or more of the computer in the authentication process isn't in the same domain as the other
+  - local authentication is used
