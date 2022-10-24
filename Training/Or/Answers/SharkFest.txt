@@ -2,4 +2,4 @@ SomeHTTP
 1) The server IP address is 212.58.246.91, since the server is the one who sends the SYN,ACK packet
 2) Inside the GET HTTP packet we can see the Host field: "Host: www.bbc.co.uk"
 3) Inside the POST HTTP packet we can see the Status Code field: "Status Code: 302"
-4) 
+4)  sadfdsf
