@@ -1,0 +1,20 @@
+Some HTTP:
+1. 212.58.246.91
+2. www.bbc.co.uk
+3. 302
+4. hotspot.inmarsat.com
+5. 2
+
+Bad Address:
+1. 3
+2. bootp is deprecated in favor of DHCP
+3. 172.16.0.100
+4. no
+5. because it needs an IP address and the router keeps providing a bad one
+
+SMBForce:
+1. 10.1.1.1-3
+2. 10.20.20.20
+3. OUTERRIM\drk-1
+4. Version 10.0 (Build 14393); NTLM Current Revision 15
+5. 
