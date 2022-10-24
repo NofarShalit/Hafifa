@@ -39,4 +39,4 @@ The SMB message is built from 3 parts:
 3) Relay to SMB - this attack is when a victim is being manipulated in one way or another to click, open, etc a file or web server,
   and gets redirected to a malicious SMB server and automatically authenticates to the server and sends it credentials to it.
 
-4) asdsdffdsdfg
+4) 
