@@ -6,4 +6,16 @@ Portable Executable
   DLL's are "linked" to the file and therefore don't take space in the file, the file just points to them and they are saved somewhere else,
   they can also be included in the file so it will be portable and independant, but people tend to use LIB files for that which are just DLL's but non dynamic.
 
-2) 
+2) PE files are built in a certain structure:
+  - DOS Header
+  - DOS Stub
+  - NT Headers
+  - Section Table
+  The specific header to focus on is the FILE_HEADER(IMAGE_FILE_HEADER) inside the NT Headers.
+  This header structure is made from 7 parts: Machine, NumberOfSections, TimeDateStamp, PointerToSymbolTable, NumberOfSymbols, SizeOfOptionalHeader, Characteristics.
+  The last part named "Characteristics" is the one who can tell us if a PE file is a DLL or an EXE(or a different type of executable that is not a DLL),
+  Characteristics is WORD long meaning 2 Bytes and has a value, each flag set adds value to it's total and thats how the Characteristics "member"
+  knows what flag is set, it calculates and subtracts the values belonging to each flag.
+  The two main flags to set are:
+    0x0002 (IMAGE_FILE_EXECUTABLE_IMAGE) that says the PE file can be run and therefore cannot be a DLL, since DLL's cannot be run.
+    0x2000 (IMAGE_FILE_DLL) that when set, directly states that this file is a DLL
