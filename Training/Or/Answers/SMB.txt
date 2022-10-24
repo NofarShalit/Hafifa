@@ -1,6 +1,5 @@
 SMB
-1)
-The SMB message is built from 3 parts:
+1) The SMB message is built from 3 parts:
 1. The Header - the smb header contain a few part:
   Protocol - this section contains 4 bytes and will always be " '\xFF','S','M','B' " in this order
   Command - a 1 byte command code
