@@ -2,6 +2,7 @@ SomeHTTP
 1) The server IP address is 212.58.246.91, since the server is the one who sends the SYN,ACK packet
 2) Inside the GET HTTP packet we can see the Host field: "Host: www.bbc.co.uk"
 3) Inside the POST HTTP packet we can see the Status Code field: "Status Code: 302"
+<<<<<<< HEAD
 4) The FQDN the server redirect to is in the location field: "Location: https://hotspot.inmarsat.com/index?origUrl=http%3A%2F%2Fwww.bbc.co.uk%2F"
     specificly the first part "https://hotspot.inmarsat.com/"
 5) 1 packet has a FIN flag set, packet number 7 has FIN,ACK flag
