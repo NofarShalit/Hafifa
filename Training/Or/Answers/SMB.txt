@@ -39,4 +39,12 @@ The SMB message is built from 3 parts:
 3) Relay to SMB - this attack is when a victim is being manipulated in one way or another to click, open, etc a file or web server,
   and gets redirected to a malicious SMB server and automatically authenticates to the server and sends it credentials to it.
 
-4) NTLM - 
+4) NTLM - NTLM is an authentication protocol using the challenge-response method, meaning that a user who wants to authenticate,
+  goes throught a few steps:
+  - the user requests access, he provides his username, his domain name, and a hash of his password (calculated automaticaly by the client)
+  - the client computer sends the username and domain name
+  - the server sends a challenge, which is just a string of random text 8 bytes long
+  - the client encrypts the challenge with his password hash and sends it to the server
+  - the server sends the username, the original challenge, and the client response (the encrypted challenge) to the domain controller
+  - the DC goes th his data base, fetches the password hash and encrypts he original challenge himself
+  - if the DC calculation and the recieved client response is identical, the authentication is succsesfull and the client is allowed to connect
