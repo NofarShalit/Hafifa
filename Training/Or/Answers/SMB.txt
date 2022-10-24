@@ -1,6 +1,5 @@
 SMB
-1)
-The SMB message is built from 3 parts:
+1) The SMB message is built from 3 parts:
 1. The Header - the smb header contain a few part:
   Protocol - this section contains 4 bytes and will always be " '\xFF','S','M','B' " in this order
   Command - a 1 byte command code
@@ -39,4 +38,27 @@ The SMB message is built from 3 parts:
 3) Relay to SMB - this attack is when a victim is being manipulated in one way or another to click, open, etc a file or web server,
   and gets redirected to a malicious SMB server and automatically authenticates to the server and sends it credentials to it.
 
-4) 
+4) NTLM - NTLM is an authentication protocol using the challenge-response method, meaning that a user who wants to authenticate,
+  goes throught a few steps:
+  - the user requests access, he provides his username, his domain name, and a hash of his password (calculated automaticaly by the client)
+  - the client computer sends the username and domain name
+  - the server sends a challenge, which is just a string of random text 8 bytes long
+  - the client encrypts the challenge with his password hash and sends it to the server
+  - the server sends the username, the original challenge, and the client response (the encrypted challenge) to the domain controller
+  - the DC goes th his data base, fetches the password hash and encrypts he original challenge himself
+  - if the DC calculation and the recieved client response is identical, the authentication is succsesfull and the client is allowed to connect
+  There are 3 main weaknesses in NTLM:
+  - Single Authentication, meaning the NTLM protocol does not support multi factor authentication
+  - Security Vulnerabilities, the simplistic form of password hashing in NTLM amkes it ossible for a pass the hash attack and even for brute force
+  - Outdated Cryptography, NTLM is old and its algorithms are not secured in todays standards
+5) Kerberos is using a ticket based protocol and therefore need a third party authentication service, so a DC needs to be present,
+  meaning that in workgroups we cannot use kerberos, in local authentication we are using NTLM,
+  when trying to connect to an IP address instead of a SPN (domain name (10.0.0.255  instead of "MOSHE-PC-1")),
+  when DNS server isn't present or reachable NTLM is used, and for everything outside of the domain, even if one side is in a domain,
+  TL:DR - kerberos will be used if SPN is used to connect, DNS server is present, both computers are inside the same domain, and remote authentication is used
+
+6) NTLM will be used if one or more criteria isn't met:
+  - SPN isn't used (IP addresses are used instead)
+  - DNS server isn't reachable
+  - one or more of the computer in the authentication process isn't in the same domain as the other
+  - local authentication is used
