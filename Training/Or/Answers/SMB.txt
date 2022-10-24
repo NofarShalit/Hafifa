@@ -48,3 +48,5 @@ The SMB message is built from 3 parts:
   - the server sends the username, the original challenge, and the client response (the encrypted challenge) to the domain controller
   - the DC goes th his data base, fetches the password hash and encrypts he original challenge himself
   - if the DC calculation and the recieved client response is identical, the authentication is succsesfull and the client is allowed to connect
+
+5) 
