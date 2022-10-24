@@ -1,2 +1,4 @@
 Portable Executable
-1) 
+1) DLL is a Dynamic Link Library, meaning it is a library of functions that can be imported by any PE file in order to either have ready to use functions and not create yourself each and everyone of them, or either to have control over api, software, other files, etc. the use of DLL's is for storing functions and importing them like librarys in code. The biggest user of DLL's is the OS used, with it's apis, but every developer who wants to communicate with other software or with the OS can include DLL's in its code in order to get api access to whatever he wants. DLL's are "linked" to the file are therefore don't take space in the file, they can also be included in the file so it will be portable and independant, but people tend to use LIB files for that which are just DLL's but non dynamic.
+
+2) 
