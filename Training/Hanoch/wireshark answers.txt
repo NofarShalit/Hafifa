@@ -17,4 +17,4 @@ SMBForce:
 2. 10.20.20.20
 3. OUTERRIM\drk-1
 4. Version 10.0 (Build 14393); NTLM Current Revision 15
-5. 
+5. luke.skywalker
