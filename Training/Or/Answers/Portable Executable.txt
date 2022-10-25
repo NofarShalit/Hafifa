@@ -19,3 +19,5 @@ Portable Executable
   The two main flags to set are:
     0x0002 (IMAGE_FILE_EXECUTABLE_IMAGE) that says the PE file can be run and therefore cannot be a DLL, since DLL's cannot be run.
     0x2000 (IMAGE_FILE_DLL) that when set, directly states that this file is a DLL
+
+3) 
