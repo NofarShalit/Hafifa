@@ -20,4 +20,14 @@ Portable Executable
     0x0002 (IMAGE_FILE_EXECUTABLE_IMAGE) that says the PE file can be run and therefore cannot be a DLL, since DLL's cannot be run.
     0x2000 (IMAGE_FILE_DLL) that when set, directly states that this file is a DLL
 
-3) 
+3) Most first-party (windows) DLLs are devided to 2 groups:
+  - 32 bit windows: the shared 32 bit DLLs are located in "C:\Windows\System32" and its subfolders
+  - 64 bit windows: the shared 64 bit DLLs are located in "C:\Windows\System32" and its subfolders
+  - 64 bit windows: the shared 32 bit DLLs are located in "C:\Windows\SysWOW64" and its subfolders
+  the difference is that only in 64 bit windows you need backwards compatabillity, and therefore
+  the 32 bit DLLs in 64 bit windows will be located in SysWOW64 folder and not the normal System32
+  so to not mix them up.
+  There is also something called "WOW64 file redirection" that on 64 bit windows, when a 32 bit proccess
+  tries to open a DLL in System32 it redirects it to SysWOW64
+
+4) 
