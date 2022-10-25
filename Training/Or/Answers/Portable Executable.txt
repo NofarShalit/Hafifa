@@ -30,4 +30,15 @@ Portable Executable
   There is also something called "WOW64 file redirection" that on 64 bit windows, when a 32 bit proccess
   tries to open a DLL in System32 it redirects it to SysWOW64
 
-4) 
+4) Before searching for DLLs the system checks for 3 things:
+  1. If a DLL with the same module name is loaded in memory, the system will check for redirection
+  before loading the DLL, ignoring completly the working directory and not searching for the DLL
+  2. If the DLL is on the list of known DLLs (for the version of windows on which the application is running,
+  for example you can try running applications on compatabillity mode for other windows versions)
+  the system will use it's copy of known DLLs for the specified version, and their known dependent DLLs instead of searching.
+  Known DLLs list are located in the registry key "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\KnownDLLs"
+  3. If a DLL has dependencies, the system searches for the DLLs as if they were loaded without their full path,
+    even if the first DLL was loaded using full path.
+
+  After checking for all of the above, the system will start searching fir the DLLs, and the searching order is dependent
+  by which type of application is running, UWP apps and desktop applictions has 2 differenc
