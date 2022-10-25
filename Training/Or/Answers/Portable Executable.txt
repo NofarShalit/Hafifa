@@ -40,4 +40,5 @@ Portable Executable
   3. If a DLL has dependencies, the system searches for the DLLs as if they were loaded without their full path,
     even if the first DLL was loaded using full path.
 
-  After checking for all of the above, the system
+  After checking for all of the above, the system will start searching fir the DLLs, and the searching order is dependent
+  by which type of application is running, UWP apps and desktop applictions has 2 differenc
