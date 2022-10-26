@@ -35,33 +35,3 @@ SMBForce
 5) Filtering for kerberos in wireshark can give us the user of drk-1, since in the kerberos authentication protocol,
     the client needs to send hes user and password hash to authenticate, so wireshark captures the username in the packet,
     and if we follow the TGS-REP we can see hes name in the cname field: "CNameString: luke.skywalker"
-
-6) The way Reflective DLL Injection works is as follows:
-    - Execution is passed, with CreateRemoteThread() or a bootstrap shellcode, to the library's
-    ReflectiveLoader function from the library's export table
-    - The ReflectiveLoader will calculate its own image's current location in memory to be able to parse its own headers
-    - The ReflectiveLoader will parse the proccess kernel32.dll to calculate the addresses of
-    LoadLibraryA, GetProcAddress, VirtualAlloc
-    - The ReflectiveLoader will allocate a region of memory to load its own image,
-    the location of the allocation is not important
-    - The library's headers and sections are loaded into their new locations in memory
-    - The ReflectiveLoader will proccess the new image's import table, loading additional library's and resolving their addresses
-    - The ReflectiveLoader will proccess it's new relocation table
-    - The ReflectiveLoader will call its newly loaded image's enrty point function,
-    "DLLMain" with "DLL_PROCCESS_ATTACH"
-    - The library has been successfully loaded into memory
-    - The ReflectiveLoader will return execution to the initial whatever that called it
-
-    Noraml DLL Injection is like telling the file to load a DLL when it starts running,
-    Reflective DLL Injection is when the proccess is already running and we inject the dll and functions
-    to its working memory
-
-7) A PE packer gets a PE file, extracts all of its information, modifies and recreates the file with it's own structure,
-    it may compress of the file sections into a new one and add its decompression code as the entrypoint,
-    when the PE is launched it decompresses the data into a memory space, it may also encrypt the code so that
-    the original code is only readable at runtime.
-    3 Programs used for packing PE files are: PE-Packer, UPX, FilePacker
-
-8) Obfuscation is the making of something difficult to understand,
-    it is the action of making source or machine code that is difficult to read by humans or computers,
-    encryption is a type of obfuscation, so does stripping metadata, repalcing classess and variable names with meaningless lables, etc.
