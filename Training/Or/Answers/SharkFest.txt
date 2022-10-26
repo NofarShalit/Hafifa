@@ -35,3 +35,5 @@ SMBForce
 5) Filtering for kerberos in wireshark can give us the user of drk-1, since in the kerberos authentication protocol,
     the client needs to send hes user and password hash to authenticate, so wireshark captures the username in the packet,
     and if we follow the TGS-REP we can see hes name in the cname field: "CNameString: luke.skywalker"
+
+6) 
