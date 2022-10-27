@@ -13,4 +13,13 @@ NTFS
     - compatible with lots of OS's
     - max volume size of 8TB
 
-2) 
+2) DataStreams are a part of the NTFS file systems, all files on a NTFS volume consist of at least
+    one stream, the main stream, or the "data" stream. the full name of a stream is as follow:
+    <filename>:<stream name>:<stream type>, the default data stream has no name, for example in a "test.txt"
+    file, the stream will be "test.txt::$DATA". a user can create named streams in files, effectively 
+    creating alternative data streams in the file. when opening a file the stream used is the default one,
+    and the only way to read the content inside different streams is with a tool, like streams or echo.
+    In the case of directories there is no default data stream, but there is a default directory stream,
+    named "$I30" with type of "$INDEX_ALLOCATION". folder can also have data streams like files hooked to them.
+
+3) 
