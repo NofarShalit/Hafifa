@@ -23,4 +23,28 @@ NTFS
     named "$I30" with type of "$INDEX_ALLOCATION". folder can also have data streams like files hooked to them.
     The legitimate use ADS is for compatibillity with the macintosh file system, And for Zone Identifiers
 
-3) 
+3) Windows explorer doesn't provide a way to show ADS, and because they are difficult to find hackers use them to
+    hide files on a victim machine, often files for rootkits and executables. executables inside ADS can be executed
+    from the command line without showing in file explorer. It is basicaly a way to hide stuff and easily access them
+
+4) Not all file systems support ADS and so when transferring a file to a non suportive file system, the ADS won't
+    get copied, and when transferring back, there is no ADS to copy back
+
+5) The NTFS file system contains a file called the Master File Table or MFT. When first mounted, the file system will
+    calculate the default MFT Zone and reserve the needed space, when either the unallocated space or the MFT Zone gets full
+    it will start to take space from the other. when a file is deleted, the location of the file marks itself as free so
+    the OS can know to write to there, but the MFT doesn't delete the record, and instead when a new file is written to
+    that space it just creates a new MFT reecord in the end of the MFT file like usual.
+    There is basicaly an infinite amount of information about each file in the MFT table but the main onces are:
+    - $STANDARD_INFORMATION, File attributes like timestamps, read-only, archive and hard link count
+    - $ATTRIBUTE_LIST, a list of attributes that make up the file, and their location if saved as reference in the MFT
+    - $FILE_NAME, the name of the file in unicode
+    - $OBJECT_ID, a 16 byte object assigned by the link tracking service
+    - $VOLUME_NAME, the volume label, shown in the $Volume file
+    - $VOLUME_INFORMATION, the volume information, shown in the $Volume file
+    - $DATA, the content of the file
+    - $INDEX_ROOT, used to implement filename allocation for directories
+    - $INDEX_ALLOCATION, used to implement filename allocation for directories
+    - $BITMAP, a bitmap index for directories
+    - $REPARSE_POINT, the reparse point
+    - $AND_MANY_MORE...
