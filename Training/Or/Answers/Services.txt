@@ -1,0 +1,14 @@
+Services
+1) Windows Services are applications that are installed as a service, meaning they don't need user interaction,
+    can start without user interaction and continue to run after the user thas logged off, services are usualy
+    started when the machine is booted, they manage a wide variety of functions like sound, backups, network connecitons,
+    display color, etc, similarly to UNIX daemons.
+    The Windows Services Control Manager can control all aspects of a service, it can choose the method of start mechanism,
+    show us all properties of a service like name, description, status and type. there are 3 categories of services:
+    Local Services, Network Services and System. Developers who choose to install their software as services can create new services.
+
+2) The Service Host (svchost.exe) is a shared service proccess that serves as a shell to laod services from DLLs.
+    Services are organized into related host groups and each service runs in a difference of svchost, so problems
+    in one instance won't affect others. systems with more than 3.5GB of RAM will automaticaly seperated each service
+    into its own svchost proccess. The security challenges with svchost is that it is very easy for attackers to hide 
+    their malware in svchost but its very difficult for us to differentiate beetween legitimate svchost and malicious ones.
