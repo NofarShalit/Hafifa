@@ -1,0 +1,16 @@
+NTFS
+1) NTFS:
+    - can store files larger than 4GB
+    - fast read and write speeds
+    - can manage permissions
+    - low compatibillity with different OS's
+    - max volume size of 16EB
+
+    FAT32:
+    - can't store files larger than 4GB
+    - slow read and write speeds
+    - doesn't have permissions
+    - compatible with lots of OS's
+    - max volume size of 8TB
+
+2) 
