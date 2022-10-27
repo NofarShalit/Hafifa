@@ -21,5 +21,6 @@ NTFS
     and the only way to read the content inside different streams is with a tool, like streams or echo.
     In the case of directories there is no default data stream, but there is a default directory stream,
     named "$I30" with type of "$INDEX_ALLOCATION". folder can also have data streams like files hooked to them.
+    The legitimate use ADS is for compatibillity with the macintosh file system, And for Zone Identifiers
 
 3) 
