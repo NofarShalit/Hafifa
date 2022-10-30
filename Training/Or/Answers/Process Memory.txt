@@ -1,2 +1,24 @@
 Process Memory
-1) 
+1) When a process tries to access an object it creates a handle to it
+
+2) a.
+    b. A memory mapped file is a file loaded into virtual memory, this mapping between a file and memory
+        lets processes write and read to and from files inside the memory
+        There are two types of memory mapped files:
+        - Persisted Memory Mapped files:
+        Persisted files are memory mapped files that are linked to a source from the disk, and so when
+        working on a file, all changes are saved to the source file in the disk.
+        This files ar best for large source files
+        - Non-Persisted Memory Mapped files:
+        Non persisted files are memory mapped files that are not linked to a source, so when a process
+        has finished working with them, the data is lost and the file is reclaimed by the garbage collector
+        This files are best for IPC communications
+        Memory mapped files are accessed through the operating systems memory manager, so the files are
+        automaticaly partitioned into a number of pages and accessed as needed
+    c. A Thread Stack is used to store the location of the return address. When a stack is used, the return address
+        is saved so that the data can be restored from the stack. the return address provided bt the caller is stored
+        in the thread stack
+    d. A heap is an area of pre-allcoated memory, that a program can access to store data.
+        The variable amount of the heap isn't known until the program is run.
+        A proccess will always have at least one heap, but it can have more. applictions should always call
+        heap functions on its default proccess heap or on its private heaps.
