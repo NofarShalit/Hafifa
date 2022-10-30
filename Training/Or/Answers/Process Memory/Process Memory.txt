@@ -30,4 +30,29 @@ Process Memory
         A proccess will always have at least one heap, but it can have more. applictions should always call
         heap functions on its default proccess heap or on its private heaps.
 
-5) 
+5) There a lot of ways to inject code into a process, some of them are:
+    1. DLL Injection: The malware calls VirtualAllocEx to create a memory space to write the path to its DLL,
+    The malware calls WriteProcessMemory to write the pathin the allocated memory,
+    Then for the code to be executed in another process, the malware calls APIs such as
+    CreateRemoteThread, NtCreateThreadEx or RtlCreateUserThread. Then idea is to pass the DLL address to one of
+    these APIs so that a remote process will execute the DLL on behalf of the malware
+    2. Portable Executable Injection: Malware can copy its code to an existing open process and get it to execute,
+    The malware allocates memory in the host process and writes its code instead of a path to a DLL by calling
+    WriteProcessMemory, and in order to find and rewrite the new base address to recorrect it, the malware finds
+    the relocation table address and recalculates and resolves the absolute addresses of the copied image image by 
+    looping through its relocation descriptors
+    3. Process Hollowing: Instead of injecting code into a host program, malware can unmap the legitimate code of a process,
+    and overwrite the target memory space with malicious executable. the malware first creates a process in suspended mode with
+    CreateProcess with the flag CREATE_SUSPENDED, to unmap the legitimate process memory the malware is using
+    ZwUnmapViewOfSection or NtUnmapViewOfSection, these two APIs release all memory pointed to by a section. The malware
+    uses VirtualAllocEx and WriteProcessMemory to write its own sections into the target process, the malware calls SetThreadContext
+    to point to the new entry point of the new malicious code section, it then resumes the suspended thread with ResumeThread
+    4. Hook Injection via SetWindowsHookEx: Hooking is a technique used to intercept function calls, malware can use SetWindowsHookEx
+    to install a hook routine in a specific thread so that when triggered a malicious DLL is loaded
+    The SetWindowsHookEx functions takes four arguments
+    - The first argument is an event like a mouse or keyboard trigger
+    - The second argument is a pointer to the function the malware wants to invoke
+    - The third argument is the module that contains the functions, so it is common to see calls to LoadLibrary and GetProcAddress
+    - The last argument is the thread to be hooked, if this value is set to zero then all threads perform the action when the event
+    is triggered, most malware will use CreateToolHelp32Snapshot and Thread32Next before SetWindowsHookEx to find a single thread and
+    hook onto it so to create less noise
