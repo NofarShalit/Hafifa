@@ -6,6 +6,17 @@
 כך נשמרים משתנים בתצורה שמאפשרת גישה מהירה ללא פרגמנטציה וגם נשמר מיקום החזרה.
 process heaps- היפ הוא מבנה נתונים היררכי ויותר מסובך מסטאק, הוא יותר איטי אבל אינו מוגבל בגודלו ומתאים יותר לשמירת משתנים בקנה מידה של תהליך שלם.
 בC צריך להקצות לאובייקטים מקום בheap ידנית. לheap ניתן לגשת באופן גלובלי והוא משותף בכל התהליך בעוד thread stacks הם מקומיים.
-3. התהליך היוצר את הmutex הוא mutest.py
-התהליך הבודק הוא mutry.py
-הקובץ עליו נוצר mutex הוא  test.txt
+3. התהליך היוצר את הmutex הוא mutex_creator.py
+התהליך הבודק הוא mutex_checker.py
+4. findmyparent.py
+5. 
+Hooks:
+בווינדוז, hooks נועדו להיות כלי לניטור על threads, ניתן ליצור hook מקומי או מרוחק. ניתן לבצע hook procedure על כל hooked thread.
+בגלל פרצת אבטחה, במקרה של hook מרוחק, ניתן דרך DLL לבצע hook procedure ובכך לטעון לVAS של הthread את כל הDLL. 
+LoadLibrary & CreateRemoteThread
+בשביל להזריק בעזרת CreateRemoteThread הפוגען משיג handle של תהליך היעד, מקצה זיכרון, מזריק לו את נתיב הDLL המלא, טוען את הDLL בעזרת CreateRemoteThread וLoadLibrary, מחכה עד שהthread שיצר יסתיים ורואה את התוצאה בעזרת ReadProcessMemory.
+CreateRemoteThread & WriteProcessMemory
+הפוגען משיג handle של תהליך היעד, מקצה זיכרון בתהליך היעד ומהזריק לשם עותק של INJDATA, מקצה מקום בזיכרון ומזריק את הקוד עצמו, ThreadFunc. הוא מריץ את הקוד הזדוני בעזרת CreateRemoteThread, ובודק את התוצאה בעזרת ReadProcessMemory.
+process hollowing
+במקרה הצורך, ניתן להשתלט כליל על תהליך שרץ. הפוגען מריץ תהליך זדוני במצב suspended, משיג handle לתהליך הקורבן, משתמש ב ZwUnmapViewOfSection בשביל לעשות unmap לזיכרון הקיים.
+אז משתמש בVirtualAllocEx וWriteProcessMemory בשביל להקצות מקום ולכתוב לזיכרון את הקוד הזדוני, משתמש בSetThreadContext כדי להגדיר את נקודת הכניסה לקוד החדש ולבסוף ResumeThread כדי להוציא את הקוד הזדוני ממצב suspended.
