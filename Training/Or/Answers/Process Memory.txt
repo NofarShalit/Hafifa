@@ -1,5 +1,6 @@
 Process Memory
-1) When a process tries to access an object it creates a handle to it
+1) When a process tries to access an object it creates a handle to it, it then uses the handle to access the object,
+    and "lock" it from usage for other processes, so to not get error while other processes are trying to use the object.
 
 2) a. When an application wants to sotre data or temporary settings, it uses the appdata folder that is unique to each user.
         It consists of 3 Subfolders: Local, LocalLow and Roaming.
