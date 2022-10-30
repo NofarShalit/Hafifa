@@ -1,7 +1,13 @@
 Process Memory
 1) When a process tries to access an object it creates a handle to it
 
-2) a.
+2) a. When an application wants to sotre data or temporary settings, it uses the appdata folder that is unique to each user.
+        It consists of 3 Subfolders: Local, LocalLow and Roaming.
+        Local: The local folder is used to store data that isn't suppose to be synced between different PCs
+        LocalLow: The LocalLow folder is the same as the Local folder but for programs who run with low integrity and or
+        restricted security settings.
+        Roaming: The Roaming folder is the folder applications use for data that is suppose to be shared or synced between multiple PCs,
+        like saved passwords, bookmarks, etc.
     b. A memory mapped file is a file loaded into virtual memory, this mapping between a file and memory
         lets processes write and read to and from files inside the memory
         There are two types of memory mapped files:
@@ -22,3 +28,5 @@ Process Memory
         The variable amount of the heap isn't known until the program is run.
         A proccess will always have at least one heap, but it can have more. applictions should always call
         heap functions on its default proccess heap or on its private heaps.
+
+3) 
