@@ -1,0 +1,58 @@
+Process Memory
+1) When a process tries to access an object it creates a handle to it, it then uses the handle to access the object,
+    and "lock" it from usage for other processes, so to not get error while other processes are trying to use the object.
+
+2) a. When an application wants to sotre data or temporary settings, it uses the appdata folder that is unique to each user.
+        It consists of 3 Subfolders: Local, LocalLow and Roaming.
+        Local: The local folder is used to store data that isn't suppose to be synced between different PCs
+        LocalLow: The LocalLow folder is the same as the Local folder but for programs who run with low integrity and or
+        restricted security settings.
+        Roaming: The Roaming folder is the folder applications use for data that is suppose to be shared or synced between multiple PCs,
+        like saved passwords, bookmarks, etc.
+    b. A memory mapped file is a file loaded into virtual memory, this mapping between a file and memory
+        lets processes write and read to and from files inside the memory
+        There are two types of memory mapped files:
+        - Persisted Memory Mapped files:
+        Persisted files are memory mapped files that are linked to a source from the disk, and so when
+        working on a file, all changes are saved to the source file in the disk.
+        This files ar best for large source files
+        - Non-Persisted Memory Mapped files:
+        Non persisted files are memory mapped files that are not linked to a source, so when a process
+        has finished working with them, the data is lost and the file is reclaimed by the garbage collector
+        This files are best for IPC communications
+        Memory mapped files are accessed through the operating systems memory manager, so the files are
+        automaticaly partitioned into a number of pages and accessed as needed
+    c. A Thread Stack is used to store the location of the return address. When a stack is used, the return address
+        is saved so that the data can be restored from the stack. the return address provided bt the caller is stored
+        in the thread stack
+    d. A heap is an area of pre-allcoated memory, that a program can access to store data.
+        The variable amount of the heap isn't known until the program is run.
+        A proccess will always have at least one heap, but it can have more. applictions should always call
+        heap functions on its default proccess heap or on its private heaps.
+
+5) There a lot of ways to inject code into a process, some of them are:
+    1. DLL Injection: The malware calls VirtualAllocEx to create a memory space to write the path to its DLL,
+    The malware calls WriteProcessMemory to write the pathin the allocated memory,
+    Then for the code to be executed in another process, the malware calls APIs such as
+    CreateRemoteThread, NtCreateThreadEx or RtlCreateUserThread. Then idea is to pass the DLL address to one of
+    these APIs so that a remote process will execute the DLL on behalf of the malware
+    2. Portable Executable Injection: Malware can copy its code to an existing open process and get it to execute,
+    The malware allocates memory in the host process and writes its code instead of a path to a DLL by calling
+    WriteProcessMemory, and in order to find and rewrite the new base address to recorrect it, the malware finds
+    the relocation table address and recalculates and resolves the absolute addresses of the copied image image by 
+    looping through its relocation descriptors
+    3. Process Hollowing: Instead of injecting code into a host program, malware can unmap the legitimate code of a process,
+    and overwrite the target memory space with malicious executable. the malware first creates a process in suspended mode with
+    CreateProcess with the flag CREATE_SUSPENDED, to unmap the legitimate process memory the malware is using
+    ZwUnmapViewOfSection or NtUnmapViewOfSection, these two APIs release all memory pointed to by a section. The malware
+    uses VirtualAllocEx and WriteProcessMemory to write its own sections into the target process, the malware calls SetThreadContext
+    to point to the new entry point of the new malicious code section, it then resumes the suspended thread with ResumeThread
+    4. Hook Injection via SetWindowsHookEx: Hooking is a technique used to intercept function calls, malware can use SetWindowsHookEx
+    to install a hook routine in a specific thread so that when triggered a malicious DLL is loaded
+    The SetWindowsHookEx functions takes four arguments
+    - The first argument is an event like a mouse or keyboard trigger
+    - The second argument is a pointer to the function the malware wants to invoke
+    - The third argument is the module that contains the functions, so it is common to see calls to LoadLibrary and GetProcAddress
+    - The last argument is the thread to be hooked, if this value is set to zero then all threads perform the action when the event
+    is triggered, most malware will use CreateToolHelp32Snapshot and Thread32Next before SetWindowsHookEx to find a single thread and
+    hook onto it so to create less noise

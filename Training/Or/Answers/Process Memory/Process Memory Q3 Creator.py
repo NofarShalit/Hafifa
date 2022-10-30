@@ -2,9 +2,9 @@ from win32event import CreateMutex
 import time
 
 def main():
-    NewMutex = CreateMutex(None,False,"CreateMutexBazinga")
+    NewMutex = CreateMutex(None,False,"MutexBazinga")
+    print("Created mutex 'MutexBazinga'")
     while True:
-        NewMutex.lock()
         time.sleep(1)
 
 if __name__ == "__main__":
