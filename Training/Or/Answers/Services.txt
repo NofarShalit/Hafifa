@@ -12,3 +12,6 @@ Services
     in one instance won't affect others. systems with more than 3.5GB of RAM will automaticaly seperated each service
     into its own svchost proccess. The security challenges with svchost is that it is very easy for attackers to hide 
     their malware in svchost but its very difficult for us to differentiate beetween legitimate svchost and malicious ones.
+
+3) A Service malware can use the startup functionallity of the services Manager, and tell the system to turn the malicious service
+    to automaticaly start with the computer booting up, and so get persistency.
