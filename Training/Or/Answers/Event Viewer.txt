@@ -1,4 +1,4 @@
-Event Viewer
+    Event Viewer
 1) The Win32LogonSession is a WMI class with 9 properties:
     Caption, Description, InstallDate, Name, Status, StartTime, AuthenticationPackage, LogonId and LogonType.
     The LogonType is the property that tells us what type of logon process happened, it can be an integer with type uint32,
@@ -55,5 +55,25 @@ Event Viewer
     Has the following fields:
     RuleName, UtcTime, SourceProcessGUID, SourceProcessID, SourceImage, TargetProcessGUID, TargetProcessID, TargetImage, NewThreadID,
     StartAddress, StartModule, StartFunction
+
     Almost everything sysmon adds to event viewer did not exist beforehand, and for the few that did have much broader documentation and reporting
-    for each event with sysmon
+    for each event with sysmon. The events sysmon adds that windows doesn't have with event viewer are:
+    Event ID 2: A process changed a file creation time
+    Event ID 3: Network connection
+    Event ID 6: Driver loaded
+    Event ID 7: Image loaded
+    Event ID 8: CreateRemoteThread
+    Event ID 9: RawAccessRead
+    Event ID 10: ProcessAccess
+    Event ID 15: FileCreateStreamHash
+    Event ID 16: ServiceConfigurationChange
+    Event ID 17: PipeEvent (Pipe Created)
+    Event ID 18: PipeEvent (Pipe Connected)
+    Event ID 19: WmiEvent (WmiEventFilter activity detected)
+    Event ID 20: WmiEvent (WmiEventConsumer activity detected)
+    Event ID 21: WmiEvent (WmiEventConsumerToFilter activity detected)
+    Event ID 22: DNSEvent (DNS query)
+    Event ID 24: ClipboardChange (New content in the clipboard)
+    Event ID 25: ProcessTampering (Process image change)
+    Event ID 27: FileBlockExecutable
+    Event ID 28: FileBlockShredding
