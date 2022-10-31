@@ -1,0 +1,10 @@
+1. getlastmod.py
+2. setlockscreen.py
+3.
+לא עבד- ניסיתי להוסיף את Computer\HKEY_CLASSES_ROOT\Python.File\shell\runas, להוסיף לו flag של HasLUAShield
+ולהוסיף subkey command עם ערך "C:\Users\moshiko\AppData\Local\Microsoft\WindowsApps\python.exe" "%1"
+4. enumfiletypes.py
+5. HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs
+הוא ערך registry בו ניתן להגדיר DLLים אשר ייטענו אוטומטית על ידי user32.dll בכל תהליך בו הוא נטען. פרקטית, זה כמעט כל תהליך המתבצע בuser mode. זו דרך לבצע DLL injection
+כך תוקף יכול ליצור שרידות או אפילו להסלים הרשאות, אם ישים שם DLL זדוני.
+6. Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USB

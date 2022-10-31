@@ -1,0 +1,17 @@
+1. 
+0- System
+2- משמש משתמשים  המשתמשים במכונה אינטראקטיבית מרחוק בshell, terminal server וכו
+3- משמש שרתים לאימות סיסמאות
+4- משמש שרתי batch, mail וweb
+5- לשירותים
+6- proxy type logon
+7- unlock- משמש GINA DLLs לחיבור משתמשים אינטראקטיבית
+8- משמר את הcredentials בחבילות ההתאמתות מה שמאפשר לשרת לעשות לclient impersonation
+9- מאפשר לcaller לשמור את הtoken המקומי ולהשתמש בcredentials חדשים לחיבורי רשת
+10- Terminal Services session that is both remote and interactive.
+11- Attempt cached credentials without accessing the network.
+12- Same as RemoteInteractive. This is used for internal auditing.
+13- Workstation logon.
+2.
+secpol.msc הוא ממשק לניהול חוקי אבטחה מקומיים  כמו מדיניות סיסמה, מדיניות נעילת חשבונות, נתינת user rights וauditing לאירועים שניתן לראות בevent viewer security
+gpedit.msc הוא ממשק לניהול group policies מקומיים- זה מכיל את כל הגדרות האבטחה בsecpol אבל גם עוד דברים שלא ישירות קשורים לאבטחה כמו startup scripts וname resolution policy
