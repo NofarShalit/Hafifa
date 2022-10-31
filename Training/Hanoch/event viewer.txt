@@ -106,3 +106,24 @@ NewThreadId
 StartAddress - של הthread החדש
 StartModule - נקבע לפי startaddress
 StartFunction - אם ה thread זהה לפונקציה בטבלת הexport
+
+5. 
+Event ID 2: A process changed a file creation time
+Event ID 3: Network connection
+Event ID 6: Driver loaded
+Event ID 7: Image loaded
+Event ID 8: CreateRemoteThread
+Event ID 9: RawAccessRead
+Event ID 10: ProcessAccess
+Event ID 15: FileCreateStreamHash
+Event ID 16: ServiceConfigurationChange
+Event ID 17: PipeEvent (Pipe Created)
+Event ID 18: PipeEvent (Pipe Connected)
+Event ID 19: WmiEvent (WmiEventFilter activity detected)
+Event ID 20: WmiEvent (WmiEventConsumer activity detected)
+Event ID 21: WmiEvent (WmiEventConsumerToFilter activity detected)
+Event ID 22: DNSEvent (DNS query)
+Event ID 24: ClipboardChange (New content in the clipboard)
+Event ID 25: ProcessTampering (Process image change)
+Event ID 27: FileBlockExecutable
+Event ID 28: FileBlockShredding
