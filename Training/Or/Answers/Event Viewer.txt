@@ -32,3 +32,5 @@ Event Viewer
     EventId 4821 is for when the user doesn't have enough permissions to connect and not becuase it is to important and protected to connect, like event 4822
     TL:DR - event 4625 is the users fault, event 4821 is the user lucking permissions to connect, event 4822 is the user being to 
     important to connect
+
+4) 
