@@ -15,3 +15,94 @@
 2.
 secpol.msc הוא ממשק לניהול חוקי אבטחה מקומיים  כמו מדיניות סיסמה, מדיניות נעילת חשבונות, נתינת user rights וauditing לאירועים שניתן לראות בevent viewer security
 gpedit.msc הוא ממשק לניהול group policies מקומיים- זה מכיל את כל הגדרות האבטחה בsecpol אבל גם עוד דברים שלא ישירות קשורים לאבטחה כמו startup scripts וname resolution policy
+3.
+4625: An account failed to log on
+קורה כאשר משתמש מזין סיסמה לא נכונה וההתחברות נכשלה.
+4821: A Kerberos service ticket was denied because the user, device, or both does not meet the access control restrictions
+קורה כאשר משתמש או העמדה שלו לא עונים על דרישות  האבטחה ליצירת כרטיס kerberos
+4822: NTLM authentication failed because the account was a member of the Protected User group
+קורה כאשר המשתמש שייך לקבוצות שהוגדר אבטחתית שלא יוכלו להתחבר בNTLM עקב היותו לא מאובטח
+4.
+Process Create
+האירוע אומר שנוצר תהליך חדש.
+מכיל שדות:
+ProcessGuid - שדה המזהה את התהליך בפני sysmon.
+ProcessId
+Image - נתיב קובץ ההרצה
+FileVersion
+Description 
+Product
+Company 
+OriginalFileName
+CommandLine - הפקודה שהריצה את התהליך
+CurrentDirectory - PWD
+User
+LogonGuid - Logon GUID של המשתמש
+LogonId - Login ID של המשתמש
+TerminalSessionId
+IntegrityLevel
+Hashes
+ParentProcessGuid
+ParentProcessId
+ParentImage
+ParentCommandLine
+
+Network Connection
+אירוע המעיד על חיבור רשתי מסויים לפי פילטור בTCP\UDP 
+השדות:
+RuleName
+UtcTime
+ProcessGuid
+ProcessId
+Image
+User
+Protocol
+Initiated - האם הTCP הוא initiated
+SourceIsIpv6
+SourceIp
+SourceHostname
+SourcePort
+SourcePortName
+DestinationIsIpv6
+DestinationIp
+DestinationHostname
+DestinationPort
+DestinationPortName
+
+Pipe Create
+קופץ כאשר נוצר named pipe.
+RuleName
+EventType
+UtcTime
+ProcessGuid
+ProcessId
+PipeName
+Image
+
+Dns Query
+קופץ כאשר נשלחת שאילתת DNS בעזרת WinAPI
+השדות:
+RuleName
+UtcTime
+ProcessGuid
+ProcessId
+QueryName
+QueryStatus
+QueryResults
+Image
+
+Create Remote Thread
+קופץ כאשר תהליך יוצר thread מרוחק בתהליך אחר בעזרת winapi -  CreateRemoteThread
+השדות:
+RuleName
+UtcTime
+SourceProcessGuid
+SourceProcessId
+SourceImage
+TargetProcessGuid
+TargetProcessId
+TargetImage
+NewThreadId
+StartAddress - של הthread החדש
+StartModule - נקבע לפי startaddress
+StartFunction - אם ה thread זהה לפונקציה בטבלת הexport
