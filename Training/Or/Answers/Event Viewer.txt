@@ -18,3 +18,10 @@ Event Viewer
     11 - CachedInteractive, attemp cached credentials without accessing the network
     12 - CachedRemoteInteractive, same as RemoteInteractive but for internal auditing
     13 - CachedUnlock, workstation logon
+
+2) Secpol.msc is a windows module that lets us edit registry keys with a GUI, specifically registry keys and values
+    related to security settings, the difference between Secpol.msc and Gpedit.msc is that Secpol.msc is a subsection of
+    Gpedit.msc, and secpol focuses on local settings only while Gpedit focuses on an entire domain level of settings.
+    GroupPolicies are stored in a hidden folder in "C:\Windows\System32\GroupPolicy"
+
+3) 
