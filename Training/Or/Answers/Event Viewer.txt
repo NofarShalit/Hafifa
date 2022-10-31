@@ -1,2 +1,20 @@
 Event Viewer
-1) The Win32LogonSession is a WMI class,
+1) The Win32LogonSession is a WMI class with 9 properties:
+    Caption, Description, InstallDate, Name, Status, StartTime, AuthenticationPackage, LogonId and LogonType.
+    The LogonType is the property that tells us what type of logon process happened, it can be an integer with type uint32,
+    0 - used by the system account
+    2 - Interactive, intended for users who are interractively using the machine like with remote shell
+    3 - Network, Intended for servers to authenticate clear text passwords
+    4 - Batch, Intended for batch servers where processess can be executed on behalf of the user without interaction
+    5 - Service, Service type logon, the account provided must have service privelege enabled
+    6 - Proxy, for proxy types logons
+    7 - Unlock, This logon type is for GINA DLLs login on users, this logon type allows for a unique audit record
+    to generate that shows the workstation has been unlocked
+    8 - NetworkClearText, preserves the name and password in the authentication package, allowing the server to impersonate
+    the clients and connect to other servers
+    9 - NewCredentials, allows the caller to clone its current credentials, and login with the same local identity,
+    and new credentials to other network clients and servers
+    10 - RemoteInteractive, terminal services session that is both remote and interactive
+    11 - CachedInteractive, attemp cached credentials without accessing the network
+    12 - CachedRemoteInteractive, same as RemoteInteractive but for internal auditing
+    13 - CachedUnlock, workstation logon
