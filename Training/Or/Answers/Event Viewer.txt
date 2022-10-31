@@ -33,4 +33,27 @@ Event Viewer
     TL:DR - event 4625 is the users fault, event 4821 is the user lucking permissions to connect, event 4822 is the user being to 
     important to connect
 
-4) 
+4) Sysmon Events:
+    - Process Create: EventID 1, logs creation of processes extensively, indexes full command that run, gives unique GUID across
+    domain to make corelations easier, and saves full hash of the file
+    Has the following fields:
+    ProcessGUID, ProcessID, Image, FileVersion, Description, Product, Company, OriginalFileName, CommandLine, CurrentDirectory,
+    User, LogonGUID, LogonID, TerminalSessionID, IntegrityLevel, Hashes, ParentProcessGUID, ParentProcessID, ParentImage, ParentCommandLine
+    - Network Connection: EventID 3, the event logs TCP/UDP connections, logs ipv4 and ipv6 destination and source addresses and ports,
+    and the ProcessGUID and ProcessID linked to the connection
+    Has the following fields:
+    RuleName, UtcTime, ProcessGUID, ProcessID, Image, User, Protocol, Initiated, SourceIsIpv6, SourceIP, SourceHostname, SourcePort,
+    SourcePortName, DestinationIsIpv6, DestinationIP, DestinationHostname, DestinationPort, DestinationPortName
+    Pipe Create: EventID 17, the event is created when a named pipe is created
+    Has the following fields:
+    RuleName, EventType, UtcTime, ProcessGUID, ProcessID, PipeName, Image
+    - DNS Query: EventID 22, thew event is generated when a process executes a dns query
+    Has the following fields:
+    RuleName, UtcTime, ProcessGUID, ProcessID, QueryName, QueryStatus, QueryResults, Image
+    - Create Remote Thread: EventID 8, created when a process creates a thread in a different process, indicates the source and target process,
+    and includes information of the code to be run in the new thread like StartAddress, StartModule and StartFunction
+    Has the following fields:
+    RuleName, UtcTime, SourceProcessGUID, SourceProcessID, SourceImage, TargetProcessGUID, TargetProcessID, TargetImage, NewThreadID,
+    StartAddress, StartModule, StartFunction
+    Almost everything sysmon adds to event viewer did not exist beforehand, and for the few that did have much broader documentation and reporting
+    for each event with sysmon
