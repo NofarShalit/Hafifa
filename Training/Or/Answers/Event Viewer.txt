@@ -24,4 +24,11 @@ Event Viewer
     Gpedit.msc, and secpol focuses on local settings only while Gpedit focuses on an entire domain level of settings.
     GroupPolicies are stored in a hidden folder in "C:\Windows\System32\GroupPolicy"
 
-3) 
+3) EventID 4625: documents every failed attemp at logging in to a local computer, this event is generated form the same computer the user tried to logon interaction
+    EventID 4821: a kerberos service ticket was denied becuase the suer, device or both does not meet the access control restrictions
+    EventID 4822: NTLM authentication failed becuase the user account was a member of the protected users group
+    The difference between all 3 of these EventId's is that event 4625 is generated when a user failes to login for hes fault, like entering the wrong
+    password, EventId 4822 is generated when the user is protected or more accurate the user is in a protected group that doesn't allow it to connect,
+    EventId 4821 is for when the user doesn't have enough permissions to connect and not becuase it is to important and protected to connect, like event 4822
+    TL:DR - event 4625 is the users fault, event 4821 is the user lucking permissions to connect, event 4822 is the user being to 
+    important to connect
