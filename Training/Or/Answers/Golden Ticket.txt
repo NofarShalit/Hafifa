@@ -1,0 +1,21 @@
+Golden Ticket
+1) In Active Directory, when accounts sign in they get a kerberos ticket that contains their authentication token
+    The Golden Ticket is the kerberos authentication token for the krbtgt account which is a special account that
+    that is used to encrypt all the authentication tokens in active directory with its password hash.
+    The Golden Ticket can be used with a pass-the-hash technique to log into any account, allowing attackers to move
+    inside a network unnoticed, everything a Domain Admin can do, an attacker can do with a Golden Ticket
+    In roder to create and use a Golden Ticket:
+    1. We need to get inside the network, via phishing or other vulnerabilities
+    2. We need to get an account with access to the domain controllers
+    3. Log into the DC and dump the password hash for the krbtgt account to create the golden ticket,
+        we can use mimikatz for that
+    4. Finnaly, we need to load out kerberos token into any session for any user and we can access everything,
+        we can use mimikatz for that
+    The victims can change the krbtgt password or even rebuild the DC and the token we haveis still gonna be valid
+    Getting a Golden Ticket requires having domain admin level rights so if the attacker already has that,
+    a Golden Ticket will be just a tool for him to play with rather than the way to control the AD
+
+2) Five tools can be used to forge a Golden Ticket: Mimikatz, Impacket, Rubeus.exe, Metasploit and Empire.
+    Sometimes when using a golden ticket, attackers will specify fake or blank account name and domain name since those
+    parameters don't need to be valid, so we can use EventID 4769 to find service tickets for users or domains that
+    doesn't exist in the enviroment and know somebody used a Golden Ticket
