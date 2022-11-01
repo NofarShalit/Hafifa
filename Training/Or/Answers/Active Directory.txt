@@ -14,5 +14,7 @@ Active Directory
     the domain. The AdminSDHolder is pushed every 60 minutes by default with the SDProp process, but the timing can be changed
 
 3) Group Policy Objects or GPOs are a representation of a file system settings for local or doamin settings for domain GPOs,
-    all GPOs are devided to two parts: computer settings and user settings, the computer settings will override user settings
-    
+    all GPOs are devided to two parts: computer settings and user settings, the computer settings will override user settings,
+    we can use GPOs to enforce strict login rules for users, to prevent high priveledge usaers from connecting to unsupervised
+    computers, we can prevent cmd from working in everycomputer and so to prevent from attackers from running commands from infected
+    systems. we can use GPOs for monitoring and response because they let us
