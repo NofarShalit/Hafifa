@@ -5,3 +5,17 @@ NTLM Relay
     not be configured with protections, NTLM authentication needs to be enabled on the domain,
     and the AD certificate servers should be used with "Certificate Authority Web Enrollment" or
     "Certificate Enrollment Web Service"
+
+2) NetBIOS and LLMNR spoofing can be done in order to get a victim computer to access an attacker
+    controlled machine, and when the victim computer tries to authenticate, the authentication can
+    be relayed with NTLM Relay and sniffed on to get the password hashes and crack them later,
+    basically what happens in that LLMNR and NetBIOS spoofing can be done to get a victim to think
+    that an attacker controlled machine is the legitimate destination and let the attacker relay the
+    data and sniff it
+
+4) Currently today it is much harder to perform NTLM Relay attacks for a few reasons:
+    - Kerberos is much more used to additional waiting needs to happen before a client uses NTLM
+    - Patches exists for CVE-2021-36942
+    - We can disable NTLM on domain controllers, IIS and AD CS
+    - We can enable EPA and disable HTTP on AD CS
+    And in general NTLM is a legacy protocol so it is less used now
