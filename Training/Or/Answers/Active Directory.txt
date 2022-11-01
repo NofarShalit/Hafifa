@@ -22,4 +22,9 @@ Active Directory
 
 4) When Windows Defender Credential Guard is enabled, windows secrets that are suppose to be saved in the Local Security Authority
     (LSA) are saved in a virtualized isolated LSA, when used the isolated LSA doesn't load drivers, but only a small number binaries
-    that are needed. when windows credential guard is enabled, kerberos doesn't allow for unconstrained delegation
+    that are needed. when windows credential guard is enabled, kerberos doesn't allow for unconstrained delegation.
+    Control Flow Guard is a feature that was created to combat memory corruption vulnerabilities, by restricting where applications
+    can execute code from, CFG can prevent memory corruption and restrict server capabilities in order to reduce attack surface,
+    and make it harder to exploit buffer overflow
+
+5) 
