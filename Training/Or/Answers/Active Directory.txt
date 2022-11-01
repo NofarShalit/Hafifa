@@ -1,2 +1,8 @@
 Active Directory
-1) 
+1) LAPS or Local Administrator Password Solution is a system to automaticaly manage local_admin passwords across the domain,
+    the system generates random unique passwords for each computer and saved the passwords in active directory,
+    the password is saved inside a special attribute in the adctive directory computer object for each corresponding computer,
+    this system lets domain admins select which users has read permissions on the local admin passwords,
+    LAPS uses group policy client-side-extention that is installed on each managed computer to perform all managment tasks.
+    LAPS checks for each computer if the password has expired or required to be changed, and if LAPS changes the password
+    according to the password policy and saved them in active directory
