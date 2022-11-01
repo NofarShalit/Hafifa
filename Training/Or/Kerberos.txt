@@ -11,8 +11,14 @@ Kerberos
     8. Client forwards the session key to the service to prove he has access to the resourc and the
     service grants hem the access
 
-2) A KDC or Key Distribution Center, is the main server which is consulted before communication takes place,
-    the KDC allows two systems to establish a secure connection to transfer data, with a uniquely generated key
-    to encrypt the data, the KDC is used instead of a standard key to minimize the chances of attack, by generating
-    new keys each time, due to its central architecture a KDC is used in smaller network to not overwhelm the network
-    
+2) A KDC or Key Distribution Center, is a process in a domain that proveides two services:
+    1. Authentication Service (AS): This service issues TGTs to the TGS in its own domain or any other
+    trusted domain, before a client can ask for a ticket for another computer if must request a TGT from the AS
+    the AS returns a TGT for the TGS, the TGT can be reused until it expires but before accessing any domain TGS,
+    the client has to access its own domain TGS
+    2. Ticket Granting Service (TGS): the service grants tickets to access computers in the domain, before a client
+    can access a computer they contact the TGS in the target computers domain and give them their TGT, and ask for a TGT
+    The KDC for a domain is located on the domain controller, both services start automaticaly by the DC's
+    Local Security Authority LSA, if the KDC is unavailable the AD is also unavailable and the domain controller is
+    not controlling the domain, to mitigate this AD networks have more than one Domain Controllers
+    The SPN used by the KDC is "krbtgt"
