@@ -1,0 +1,24 @@
+Kerberos
+1) When a client wants to authenticate with kerberos:
+    1. Client requests an authentication ticket (TGT) from the key distribution center (KDC)
+    2. The KDC verifies the credentials and sends back an encrypted TGT and session key
+    3. The TGT is encrypted using the ticket granting service (TGS) secret key
+    4. The client stores the TGT and when it expires the local session manager will request another TGT
+    5. The client sends the TGT to the current TGS with the service principal name (SPN) of the
+    resource the client wants to access
+    6. the KDC verifies the TGT of the user and that the user has access to the service he is trying to reach
+    7. TGS sends a valid session key to the client
+    8. Client forwards the session key to the service to prove he has access to the resourc and the
+    service grants hem the access
+
+2) A KDC or Key Distribution Center, is a process in a domain that proveides two services:
+    1. Authentication Service (AS): This service issues TGTs to the TGS in its own domain or any other
+    trusted domain, before a client can ask for a ticket for another computer if must request a TGT from the AS
+    the AS returns a TGT for the TGS, the TGT can be reused until it expires but before accessing any domain TGS,
+    the client has to access its own domain TGS
+    2. Ticket Granting Service (TGS): the service grants tickets to access computers in the domain, before a client
+    can access a computer they contact the TGS in the target computers domain and give them their TGT, and ask for a TGT
+    The KDC for a domain is located on the domain controller, both services start automaticaly by the DC's
+    Local Security Authority LSA, if the KDC is unavailable the AD is also unavailable and the domain controller is
+    not controlling the domain, to mitigate this AD networks have more than one Domain Controllers
+    The SPN used by the KDC is "krbtgt"

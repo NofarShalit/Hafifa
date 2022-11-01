@@ -27,4 +27,10 @@ Active Directory
     can execute code from, CFG can prevent memory corruption and restrict server capabilities in order to reduce attack surface,
     and make it harder to exploit buffer overflow
 
-5) 
+5) Lightweight Directory Access Protocol or LDAP, is a protocol that acts like a language for quering information inside a domain,
+    similarly to sql but for doamin queries, LDAP specifies a method of directory storage and facilitates the authentication and
+    authorization of users to files and servers, by default LDAP is unsecure, and to secure it we can use LDAP over SLL or TLS by
+    installing a properly formatted certificate on the domain controller from a CA.
+    Tools that can alegedly commit LDAP injeciton are: Tamper Data, TamperIE and WebScarab.
+    in order to do a LDAP injection we need to stop the LDAP query and change it so that the query is injected with whatever,
+    like how we can intercept web request with BurpSuite and change the content in order to create sql injection.
