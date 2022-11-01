@@ -1,0 +1,7 @@
+NTLM Relay
+1) NTLM Relay attack allows attackers to steal hashed versions of users passwords and relay them
+    in order to authenticate to servers, attackers use Machine-In-The-Middle technique in order
+    to intercet the client requests. to initiate the attack the certificate servers should
+    not be configured with protections, NTLM authentication needs to be enabled on the domain,
+    and the AD certificate servers should be used with "Certificate Authority Web Enrollment" or
+    "Certificate Enrollment Web Service"

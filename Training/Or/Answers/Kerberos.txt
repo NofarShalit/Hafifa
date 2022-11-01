@@ -22,3 +22,14 @@ Kerberos
     Local Security Authority LSA, if the KDC is unavailable the AD is also unavailable and the domain controller is
     not controlling the domain, to mitigate this AD networks have more than one Domain Controllers
     The SPN used by the KDC is "krbtgt"
+
+3) Krbtgt is the default account in all active directory networks, it acts as the KDC service account,
+    when a user wants to authenticate with kerberos and obtain a TGT, the TGT is signed with krbtgt password,
+    this makes the account valuable and if an attacker gets the krbtgt password he can create a golden ticket
+    and do malicious stuff. When the KDC is setup, the krbtgt account is automaticaly created with a random password.
+    The krbtgt account cannot be deleted or enabled, and it cannot be changed
+    You can reset krbtgt password like any other user, but this account is unique because it has memory of up to 2
+    previous passwords, meaning that when the first password fails it will try to use the previous one, so a password
+    reset is needed to be done twice, you should reset the password wait for replicaiton, and reset password again in
+    order to be completely secure, if the password is reset twice in rapid succession it will force clients to re-authenticate
+    including application services
