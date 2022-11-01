@@ -1,0 +1,21 @@
+1.
+קיים client, server וKDC המורכב מauthentication service (AS) וticket granting service (TGS)
+הלקוח מבקש TGT:
+הלקוח שולח לAS שם משתמש, שירות מבוקש ועוד פרטים.
+הAS מחזיר את שם הTGS והTGS session key מוצפנים בסיסמת הclient ואת הTGT: שם המשתמש, שם הTGS, הTGS session key ועוד פרטים מוצפנים במפתח הTGS.
+הלקוח מבקש ST:
+הלקוח שולח את הTGT, שם הservice המבוקש בPT ואת הuser authenticator: שם המשתמש וחותמת זמן מוצפן בTGS session key לTGS
+הTGS בודק אם הservice המבוקש קיים אצלו, אם כן הוא מפענח את הTGT בעזרת המפתח שלו, מפענח את הuser authenticator בעזרת הTGS session key מהTGT, מצליב את הנתונים, מוודא שלמשתמש יש גישה לשירות המבוקש ואם כן מאשר את המשתמש.
+הAS מחזיר את שם הTGS והservice session key מוצפנים בTGS session keyואת הST: שם המשתמש, שם השירות, הservice session key ועוד פרטים מוצפנים במפתח הservice.
+הלקוח מבקש את השירות:
+הלקוח שולח את הST, שם הservice המבוקש בPT ואת הuser authenticator: שם המשתמש וחותמת זמן מוצפן בserver session key לservice.
+הservice מפענח את הST בעזרת המפתח שלו, מפענח את הuser authenticator בעזרת הservice session key מהST, מצליב את הנתונים ומאמת את המשתמש.
+2.
+הKDC הוא שרת שאחראי על אחסון המפתחות של משתמשים ושירותים בהם הוא תומך ועל חלוקת TGT וST.
+הוא מורכב מ3 חלקים:
+DB של כל המשתמשים, השירותים והkeys (סיסמאות) שלהם.
+authentication service (AS) האחראי על אימות משתמשים והנפקת TGT.
+ticket granting service (TGS) האחראי על אישור המשתמשים בגישה לשירותים בהינתן TGT.
+3. krbtgt הוא משתמש שירות המשמש את הKDC לאחסון הTGS key- הוא הסיסמה של krbtgt. הוא במצב מושבת באופן תמידי.
+אי אפשר לחסום או למחוק אותו, ואם זה היה קורה, הKDC לא היה יכול לתפקד.
+ניתן לבצע לו שינוי סיסמה בAD. אם ההתאמתות נכשלת בסיסמה העדכנית יהיה ניסיון נוסף עם הסיסמה הקודמת, לכן משנים את הסיסמה פעמיים. כאשר מאפסים לו סיסמה, מפתח הTGS משתנה. נהוג לשנות את הסיסמה שלו מדי פעם  בשביל להקשות על brute force.
