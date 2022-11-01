@@ -1,0 +1,14 @@
+Pass The Ticket
+1) Instead of forging tickets like in Golden Ticket attack, in Pass The Ticket we steal valid tickets
+    that has already been forged and pass them from one system to another in order to access resources
+    as a legitimate user.
+    An attacker can dump the LSASS process and steal all cached TGTs and TGS tickets from a system.
+    Both the TGTs and TGS tickets can be stolen and reused to authenticate to other network computers
+    and they usally last for up to 10 hours, sessions are isolated within Active Directory in order to
+    prevent other sessions form accessing any data, if an attacker is able to escalate priviledges to
+    Administrator or SYSTEM, they can reach into other sessions and extract valid tickets from other users.
+
+2) We can use mimikatz and Rebeus to initiate a Pass The Hash attack
+    And to recognize a Pass The Ticket attack we can look at event viewer, using EventID 4624 with logon type 3
+    and Authentication Package of NTLM, and correlating the logon id frpm EventID 4624 with the logon id in EventID 4672
+    can let us locate a Pass The Tickte attack
