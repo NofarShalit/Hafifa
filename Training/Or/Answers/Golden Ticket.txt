@@ -18,4 +18,5 @@ Golden Ticket
 2) Five tools can be used to forge a Golden Ticket: Mimikatz, Impacket, Rubeus.exe, Metasploit and Empire.
     Sometimes when using a golden ticket, attackers will specify fake or blank account name and domain name since those
     parameters don't need to be valid, so we can use EventID 4769 to find service tickets for users or domains that
-    doesn't exist in the enviroment and know somebody used a Golden Ticket
+    doesn't exist in the enviroment and know somebody used a Golden Ticket, more so if a TGS rewuest was made without a
+    corresponding TGT request than the TGS is probably using a Golden Ticket to forge the request
