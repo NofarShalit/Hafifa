@@ -13,4 +13,5 @@ Active Directory
     and they will be copied automaticaly, so this way an attacker can have persistent access to priveledged accounts in
     the domain. The AdminSDHolder is pushed every 60 minutes by default with the SDProp process, but the timing can be changed
 
-3) 
+3) Group Policy Objects or GPOs are a representation of a file system settings for local or doamin settings for domain GPOs,
+    all GPOs are devided to two parts: computer settings and user settings, the computer settings will override user settings
