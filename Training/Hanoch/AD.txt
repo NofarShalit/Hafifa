@@ -14,4 +14,4 @@ control flow guard הוא כלי מייקרוסופטי נגד מתקפות זי
 זה הפרוטוקול בו משתמש AD, ובכל שאילתה שמצבעים אל מול הAD מתבצעת עם פקטות LDAP.
 LDAP פגיע למתקפות LDAP injection, בהן בדומה לSQL injection מוזנות ,תנאים או אותיות מיוחדות כמו סוגרים, פסיקים וגרשיים לשאילתה כדי לבצע מניפולציות על השאילתה ולקבל מידע שאחרת לא היה נגיש.
 ההקשחות האפשריות הן בדיקת קלט, או שימוש בframeworks העושים escaping לאותיות אסורות באופן אוטומטי ולבדוק פלט.
-Tamper Data, TamperIE, WebScarab,etc מסוגלים לבצע ldap injection
+Tamper Data, TamperIE, WebScarab,etc מסוגלים לבצע ldap injection.
