@@ -17,4 +17,9 @@ Active Directory
     all GPOs are devided to two parts: computer settings and user settings, the computer settings will override user settings,
     we can use GPOs to enforce strict login rules for users, to prevent high priveledge usaers from connecting to unsupervised
     computers, we can prevent cmd from working in everycomputer and so to prevent from attackers from running commands from infected
-    systems. we can use GPOs for monitoring and response because they let us
+    systems. we can use GPOs for monitoring and response because they let us audit changes in the computer or in users, and let us
+    create events for event log appropriatly to monitor
+
+4) When Windows Defender Credential Guard is enabled, windows secrets that are suppose to be saved in the Local Security Authority
+    (LSA) are saved in a virtualized isolated LSA, when used the isolated LSA doesn't load drivers, but only a small number binaries
+    that are needed. when windows credential guard is enabled, kerberos doesn't allow for unconstrained delegation
