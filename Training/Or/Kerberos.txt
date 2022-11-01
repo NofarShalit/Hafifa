@@ -1,2 +1,12 @@
 Kerberos
-1) 
+1) When a client wants to authenticate with kerberos:
+    1. Client requests an authentication ticket (TGT) from the key distribution center (KDC)
+    2. The KDC verifies the credentials and sends back an encrypted TGT and session key
+    3. The TGT is encrypted using the ticket granting service (TGS) secret key
+    4. The client stores the TGT and when it expires the local session manager will request another TGT
+    5. The client sends the TGT to the current TGS with the service principal name (SPN) of the
+    resource the client wants to access
+    6. the KDC verifies the TGT of the user and that the user has access to the service he is trying to reach
+    7. TGS sends a valid session key to the client
+    8. Client forwards the session key to the service to prove he has access to the resourc and the
+    service grants hem the access
