@@ -15,3 +15,4 @@ Active Directory
 
 3) Group Policy Objects or GPOs are a representation of a file system settings for local or doamin settings for domain GPOs,
     all GPOs are devided to two parts: computer settings and user settings, the computer settings will override user settings
+    ss
