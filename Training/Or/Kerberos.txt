@@ -10,3 +10,9 @@ Kerberos
     7. TGS sends a valid session key to the client
     8. Client forwards the session key to the service to prove he has access to the resourc and the
     service grants hem the access
+
+2) A KDC or Key Distribution Center, is the main server which is consulted before communication takes place,
+    the KDC allows two systems to establish a secure connection to transfer data, with a uniquely generated key
+    to encrypt the data, the KDC is used instead of a standard key to minimize the chances of attack, by generating
+    new keys each time, due to its central architecture a KDC is used in smaller network to not overwhelm the network
+    
