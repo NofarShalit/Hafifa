@@ -1,0 +1,11 @@
+1. pass the ticket היא מתקפה בה התוקף טוען TGT או ST ששמור בזיכרון של LSASS במחשב ממנו התחבר משתמש חזק ובעזרתו מתחבר למשאבים נוספים ברשת- lateral movement.
+מתקפה זו יכולה להקנות פוטנציאלית גישה בהרשאות גבוהות לDC ולאפשר מתקפת golden ticket.
+2. ניתן לבצעה בעזרת rubeus או mimikatz:
+לדוגמה בmimikatz-
+privilege::debug
+sekurlsa::tickets /export
+kerberos::ptt (ticket name).kirbi
+ניתן לזהות pass the ticket כאשר המשתמש המזוהה עם הsession הוא לא אותו המשתמש המזוהה עם הticket המזוהה עם אותו session.
+
+
+ 
