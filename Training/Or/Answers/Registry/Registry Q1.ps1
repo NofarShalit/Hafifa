@@ -21,5 +21,5 @@ foreach ($WORD in $USER_INPUT)
     { $REG_PATH = ("{0}\{1}" -f $REG_PATH,$WORD) }
     $FIRST_WORD = $false
 }
-$REG_PATH = $REG_PATH.Remove(0,1)
+    $REG_PATH = $REG_PATH.Remove(0,1)
 Get-ChildItem -path $REG_PATH -Recurse -ErrorAction SilentlyContinue | Where-Object LastWriteTime -gt (get-date).AddDays(-1) | sort LastWriteTime
