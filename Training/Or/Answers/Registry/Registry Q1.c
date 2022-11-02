@@ -11,7 +11,7 @@ int main()
     PFILETIME LAST_WRITE_TIME;
     RegOpenKeyExW(ROOT_KEY, SUB_KEY, 0, KEY_ALL_ACCESS, &OPEN_KEY);
     RegQueryInfoKeyW(OPEN_KEY,0,0,0,0,0,0,0,0,0,0,0,LAST_WRITE_TIME);
-    printf(LAST_WRITE_TIME);
+    printf("%s",LAST_WRITE_TIME);
 
     return 0;
 }
