@@ -73,3 +73,6 @@ Kerberoast
     type of 0x17, and even than it is hard to determine that there is a kerberoast attack
 
     - Get-WinEvent -FilterHashtable @{Logname='Security';ID=4769} -MaxEvents 1000 | ?{$_.Message.split("`n")[8] -ne 'krbtgt' -and $_.Message.split("`n")[8] -ne '*$' -and $_.Message.split("`n")[3] -notlike '*$@*' -and $_.Message.split("`n")[18] -like '*0x0*' -and $_.Message.split("`n")[17] -like "*0x17*"} | select ExpandProperty message
+
+    # Knowledge bt HackTricks
+    # https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/kerberoast
