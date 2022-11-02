@@ -1,5 +1,5 @@
 Kerberoast
-    1) Kerberoast is the proccess of cracking service tickets and reqriting them in order to get access
+    1) Kerberoast is the proccess of cracking service tickets and rewriting them in order to get access
     to a targeted service. we can use legitimate active directory access in order to request and
     export a service to crack its hashes offline and get the password, service tickets are encrypted
     with NTLM so any user can dump the hashes from the service without a shell, sometimes services
