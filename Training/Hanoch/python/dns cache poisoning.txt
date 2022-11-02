@@ -1,0 +1,5 @@
+DNS cache poisoning היא מתקפה בה תוקף מנצל את מנגנון הcaching של שרתי DNS.
+מנגנון הcaching הוא מנגנון הקיים בשרתי DNS ונועד להגביר את מהירות מציאת התשובות לשאילתות. אם דלוק מנגנון הrecursion, כאשר שרת מקבל שאילתת DNS לה אין לו תשובה הוא יפנה אותה לשרת DNS אחר בתקווה לקבל תשובה ממנו- שיהיה authoritative name server.
+כאשר שרת DNS מקבל תשובה מה authoritative name server הוא מחזיר אותה לשואל המקורי ושומר אותה בcache למען קיצור תהליכים בעתיד.
+התוקף 192.6.6.6 יכול לשלוח שאילתה לאתר אליו הוא רוצה להתחזות www.example.com, לחכות שהוא יעביר לauthoritative name server ולזייף תשובה של authoritative nameserver.
+אז הcache של שרת הDNS יפנה את כל מי שמבקש את example.com לכתובת 192.6.6.6.
