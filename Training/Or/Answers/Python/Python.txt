@@ -1,0 +1,5 @@
+Python
+2) Ping Tunneling is the process of encapsulating data with ping packets, so that the packets can be dissasebled
+    and release the data in the other computer. for example we can encapsulate RDP packets over ICMP and send the
+    packets to a remote computer in order to dissaseble the packet and get a Remote Desktop,
+    the other computer will think he is recieving ICMP packets while he actually recieves RDP packets
