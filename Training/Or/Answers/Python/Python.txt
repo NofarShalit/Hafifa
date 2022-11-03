@@ -8,7 +8,4 @@ Python
     (but in reality mostly 1500 bytes at most for one packet becuase of MTU limitations). For example if an attacker
     wants to create a reverse shell, he can insert a SSH packet into the data section of the ICMP datagram packet
     that will establish the reverse shell, or a compromised device can send small pieces of data to an attacker
-    through the datagram of an echo request
-    for example we can encapsulate RDP packets over ICMP and send the
-    packets to a remote computer in order to dissaseble the packet and get a Remote Desktop,
-    the other computer will think he is recieving ICMP packets while he actually recieves RDP packets.
+    through the datagram of an echo request.
