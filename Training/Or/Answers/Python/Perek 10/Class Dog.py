@@ -17,7 +17,7 @@ class Dog:
         self.__age = age
     
     def __str__(self):
-        print(f"The animal is {self.get_age()} and named {self.get_name()}")
+        print(f"The animal is {self.__age} and named {self.__name}")
 
 def main():
     kermit = Dog("kermit", 13)
