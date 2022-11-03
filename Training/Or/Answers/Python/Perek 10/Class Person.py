@@ -20,4 +20,12 @@ class Person:
         self.__age = age
 
 class Student(Person):
+    def __init__(self, name="yoni", age=13, avg=97):
+        Person.__init__(self, name, age)
+        self.__avg = avg
     
+    def get_avg(self):
+        return self.__avg
+
+    def set_avg(self, avg):
+        self.__avg = avg
