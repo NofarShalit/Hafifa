@@ -9,3 +9,11 @@ Python
     wants to create a reverse shell, he can insert a SSH packet into the data section of the ICMP datagram packet
     that will establish the reverse shell, or a compromised device can send small pieces of data to an attacker
     through the datagram of an echo request.
+
+    DNS Cache Poisining or DNS Spoofing is when an attacker is tricking a DNS resolver into caching wrong information
+    with the expectation that the DNS resolver will send the wrong IP address to the clients, and the users will be
+    directed to the wrong place, this attack is possible becuase DNS resolvers have no way to verify that the data in
+    their caches is correct, so DNS information remains in the cache until the TTL expires or it is removed manually,
+    DNSSEC is a protocol that aims to solves some of this problems.
+    TL:DR - DNS Cache Poisining is the act of entering wrong inform ation into the DNS cache, so that DNS queries return
+    an incorrect response and users will be redirected to the wrong website.
