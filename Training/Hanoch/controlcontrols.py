@@ -17,7 +17,7 @@ WELCOME TO THE TROLLAGE
 
 PICK YOUR POISON: 
 '''
-SENTENCE = itertools.cycle('i am a loser ')
+SENTENCE = itertools.cycle('Well hello there, ')
 
 
 
@@ -44,11 +44,24 @@ def left_up(event):
     t.start()
     return False
 
-def type_key(event):
+def type_key1(event, l):
+    l.acquire()
     c = SENTENCE.__next__()
-    keyboard.write(c)
+    print(c)
+    t = threading.Thread(keyboard.write(c))
+    t.start()
+    l.release()
     return False
 
+def type_key(event):
+    global flag
+    flag += 1
+    if flag % 3:
+        c = SENTENCE.__next__()
+        print(c)
+        flag += 1
+        keyboard.write(c)
+    return False
  
 def main():
     choice = input(MENU)
@@ -63,6 +76,9 @@ def main():
         #hm.MouseLeftUp = right_up
         hm.MouseRightUp = left_up
     elif choice == '4':
+        #lock = threading.Lock()
+        global flag
+        flag = 0
         hm.KeyDown = type_key
         hm.KeyUp = block
     hm.HookMouse()
@@ -73,3 +89,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
