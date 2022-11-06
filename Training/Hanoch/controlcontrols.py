@@ -6,7 +6,7 @@ import pythoncom
 import threading
 import itertools
 import keyboard
-
+import mouse
 
 MENU = '''
 WELCOME TO THE TROLLAGE
@@ -18,51 +18,71 @@ WELCOME TO THE TROLLAGE
 PICK YOUR POISON: 
 '''
 SENTENCE = itertools.cycle('Well hello there, ')
-
-
+lock_mu = threading.Lock()
+lock_md = threading.Lock()
+lock_kb = threading.Lock()
+called_by_hook = False
 
 def block(event):
     return False
 
-def right_down(event):
-    t = threading.Thread(target=win32api.mouse_event, args=(win32con.MOUSEEVENTF_RIGHTDOWN,0,0))
-    t.start()
-    return False
-
-def right_up(event):
-    t = threading.Thread(target=win32api.mouse_event, args=(win32con.MOUSEEVENTF_RIGHTUP,0,0))
-    t.start()
-    return False
-
 def left_down(event):
-    t = threading.Thread(target=win32api.mouse_event, args=(win32con.MOUSEEVENTF_LEFTDOWN,0,0))
-    t.start()
-    return False
+    global called_by_hook
+    if called_by_hook:
+        called_by_hook = False
+        return True
+    else:
+        t = threading.Thread(target=win32api.mouse_event,args=(win32con.MOUSEEVENTF_LEFTDOWN,0,0))
+        t.start()
+        called_by_hook = True
+        return False
 
 def left_up(event):
-    t = threading.Thread(target=win32api.mouse_event, args=(win32con.MOUSEEVENTF_LEFTUP,0,0))
-    t.start()
-    return False
+    global called_by_hook
+    if called_by_hook:
+        called_by_hook = False
+        return True
+    else:
+        t = threading.Thread(target=win32api.mouse_event,args=(win32con.MOUSEEVENTF_LEFTUP,0,0))
+        t.start()
+        called_by_hook = True
+        return False
 
-def type_key1(event, l):
-    l.acquire()
-    c = SENTENCE.__next__()
-    print(c)
-    t = threading.Thread(keyboard.write(c))
-    t.start()
-    l.release()
-    return False
+def right_down(event):
+    global called_by_hook
+    if called_by_hook:
+        called_by_hook = False
+        return True
+    else:
+        t = threading.Thread(target=win32api.mouse_event,args=(win32con.MOUSEEVENTF_RIGHTDOWN,0,0))
+        t.start()
+        called_by_hook = True
+        return False
+
+def right_up(event):
+    global called_by_hook
+    if called_by_hook:
+        called_by_hook = False
+        return True
+    else:
+        t = threading.Thread(target=win32api.mouse_event,args=(win32con.MOUSEEVENTF_RIGHTUP,0,0))
+        t.start()
+        called_by_hook = True
+        return False
+
 
 def type_key(event):
-    global flag
-    flag += 1
-    if flag % 3:
+    global lock_kb
+    if lock_kb.locked():
+        return True
+    else:
+        lock_kb.acquire()
         c = SENTENCE.__next__()
-        print(c)
-        flag += 1
         keyboard.write(c)
-    return False
- 
+        lock_kb.release()
+        return False
+
+    
 def main():
     choice = input(MENU)
     hm = pyHook.HookManager()
@@ -71,14 +91,11 @@ def main():
     elif choice == '2':
         hm.KeyAll = block
     elif choice == '3':
-        #hm.MouseLeftDown = right_down
+        hm.MouseLeftDown = right_down
         hm.MouseRightDown = left_down
-        #hm.MouseLeftUp = right_up
+        hm.MouseLeftUp = right_up
         hm.MouseRightUp = left_up
     elif choice == '4':
-        #lock = threading.Lock()
-        global flag
-        flag = 0
         hm.KeyDown = type_key
         hm.KeyUp = block
     hm.HookMouse()
@@ -89,5 +106,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
