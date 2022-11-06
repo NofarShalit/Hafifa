@@ -4,7 +4,7 @@ from scapy.all import *
 def main():
     
     # Send data through ICMP- ICMP tunnel
-    p = sr1(IP(dst="1.1.1.1")/ICMP()/"data")
+    p = send(IP(dst="10.0.0.1")/ICMP()/"command")
     
     # Sniff HTTP packets
     pcap = sniff(filter='icmp', count=100)
