@@ -11,8 +11,10 @@ tools may appear on the allow list in a computer so no anomalous activity will b
 To detect and counter LotL attacks we can use solutions based on behavioral analysis, the technology
 detect anomalous program and user activity so to find actions that could signify an attack.
 
-We can create a dump for the lsass process, we can go to task manager-> details-> right click on lsass.exe->
--> create dump file
+We can create a dump for the lsass process:
+we can go to task manager -> details -> right click on lsass.exe -> create dump file
+or if the computer have sysinternals:
+- procdump.exe -ma lsass.exe "C:\Users\Public\Documents"
 and then analyze the memory dump to find saves passwords
 
 If we have admin rights and the machine has sysinternals, we can use psexec to escalate to system user
