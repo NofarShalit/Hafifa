@@ -8,4 +8,9 @@ Registry
     is enabled the AppInit_DLLs feature is disabled. From windows 8 onwards, if an app wants a certificate,
     it must not load arbitrary DLLs that will intercept with win32apis using the AppInit_DLLs mechanism.
 
-6) 
+6) The Registry key "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USBSTOR" stores a list of all
+    usb storage devices that has been plugged, with the following syntax:
+    <USB Device Name>&<Vendor Name>&<Device Seriel Number>
+    if the second character of the device seriel number is "&" it means the device doesn't have a seriel numebr
+    There is also the Registry key "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USB" which stores
+    all the vid/pid information of all USB connections
