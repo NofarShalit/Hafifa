@@ -10,3 +10,18 @@ signatures to detect, the use of legitimate tools can complicate the investigati
 tools may appear on the allow list in a computer so no anomalous activity will be present.
 To detect and counter LotL attacks we can use solutions based on behavioral analysis, the technology
 detect anomalous program and user activity so to find actions that could signify an attack.
+
+We can create a dump for the lsass process, we can go to task manager-> details-> right click on lsass.exe->
+-> create dump file
+and then analyze the memory dump to find saves passwords
+
+If we have admin rights and the machine has sysinternals, we can use psexec to escalate to system user
+- psexec -s -i cmd.exe
+
+An LotL example:
+We can write a powershell script that will turn off the computer automatically,
+if we place the script in the startup folder or in the registry "run" key, we can effectively make the
+computer shutdown each time it turns on, or to not create a file we can use Task Scheduler,
+and inject ourselves into other tasks to not be found easily.
+- shutdown /f /s /t 0
+With this technique we can practically disable the use of a computer because it wont be able to turn on.
