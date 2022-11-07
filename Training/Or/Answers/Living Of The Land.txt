@@ -1,0 +1,29 @@
+Living Of The Land
+
+A Living Of The Land or (LotL) attack is when an attacker uses legitimate software found on the infected
+system to perform malicious acts on it. In LotL, an attacker will forge whatever software is found on the
+computer to achieve its goals, whether it would be SSH for backdoor, or WMI for extracting information.
+LotL attacks are classified as fileless because they do not leave any trace behind, A lot of LotL attacks
+use software found on any computer instead of bringing their own like Powershell, WMI, NETSH, Sysinternals,
+SC tools, or even forensic tools like mimikatz if found. Attacker do not leave files so there are no
+signatures to detect, the use of legitimate tools can complicate the investigation, and legitimate
+tools may appear on the allow list in a computer so no anomalous activity will be present.
+To detect and counter LotL attacks we can use solutions based on behavioral analysis, the technology
+detect anomalous program and user activity so to find actions that could signify an attack.
+
+We can create a dump for the lsass process:
+we can go to task manager -> details -> right click on lsass.exe -> create dump file
+or if the computer have sysinternals:
+- procdump.exe -ma lsass.exe "C:\Users\Public\Documents"
+and then analyze the memory dump to find saves passwords
+
+If we have admin rights and the machine has sysinternals, we can use psexec to escalate to system user
+- psexec -s -i cmd.exe
+
+An LotL example:
+We can write a powershell script that will turn off the computer automatically,
+if we place the script in the startup folder or in the registry "run" key, we can effectively make the
+computer shutdown each time it turns on, or to not create a file we can use Task Scheduler,
+and inject ourselves into other tasks to not be found easily.
+- shutdown /f /s /t 0
+With this technique we can practically disable the use of a computer because it wont be able to turn on.
