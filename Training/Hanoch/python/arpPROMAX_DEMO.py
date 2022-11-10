@@ -7,9 +7,16 @@ ARP_CMD = 'arp -a'
 IP = 0
 MAC = 1
 
-def arp_monitor(pkt):
+def arp_request(ip):
+    req = Ether(src="ff:ff:ff:ff:ff:ff", dst="ff:ff:ff:ff:ff:ff") / ARP(psrc='1.2.3.4', pdst=ip)
+    responses = srp(req, timeout=5, verbose=False)
+    answer = responses[0][0][1]
+    print(answer.show())
+    
+def arp_authenticate(pkt):
     if ARP in pkt and pkt[ARP].op == 2:
-        print(pkt.ARP.psrc)
+        claimedmac = pkt[ARP].hwsrc
+        
     
 def main():
     '''
@@ -27,12 +34,9 @@ def main():
             print(f'arp poisoning detected! both {line[IP]} and {ip} both resolve as {line[MAC]}')
         iptomac.update({line[MAC]:line[IP]})
     
-    # Hot detect ARP poisonings
-    while True:
-        packet = sniff(filter='arp', count=1)
-        print(packet.summary())
     '''
-    sniff(prn=arp_monitor, filter="arp", store=0)
+    arp_request('10.0.0.1')
+    sniff(prn=arp_authenticate, filter="arp", store=0)
 
 
 
