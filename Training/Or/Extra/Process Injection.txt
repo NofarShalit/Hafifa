@@ -51,4 +51,12 @@ CreateToolHelp32Snapshot, Thread32First, OpenThread
 
 5) הזרקת וו (hook) באמצעות SetWindowsHookEx
 Hooking זאת טכניקה להפרעה של קריאות של פונקציות, פוגענים יכולים לנצל Hooking בכדי לגרום לDLL זדוני שלהם להיטען בעת התחלת פעולה מסויימת בתהליך נבחר,
-בדרך כלל זה מתבצע על ידי קריאה של SetWindowsHookEx והתקנה של Hook
+בדרך כלל זה מתבצע על ידי קריאה של SetWindowsHookEx והתקנה של "שגרת" Hook בתוך שרשרת הHookים, הפונקציה SetWindowsHookEx מקבלת ארבעה ארגיומנטים:
+הראשון הוא סוג של אירוע, האירוע יכול להיות כל אירוע מתוך רשימה מוגדרת, למשל לחיצת מקלדת WH_KEYBOARD או קבלת מידע מעכבר WH_MOUSE
+https://learn.microsoft.com/en-us/windows/win32/winmsg/about-hooks?redirectedfrom=MSDN
+השני הוא מצביע לפונקציה שאותו הפוגען רוצה להריץ כאשר האירוע מתרחש 
+השלישי הוא מודול אשר מכיל את הפונקציה ולכן נפוץ לראות קריאות לLoadLibrary וGetProcAddress לפני קריאה לSetWindowsHookEx 
+הרביעי הוא הThread שאליו הHook יהיה משוייך, אם ערך זה הוא אפס כל הThreadים יבצעו את הפעולה שהוגדרה כאשר השגרה של הHook מתבצעת.
+לרוב פוגענים יתבייטו על Thread אחד כדי לא ליצור הרבה רעש, ולכן ניתן לראות לפעמים קריאות לCreateToolHelp32Snapshot ולThread32Next
+לפני SetWindowsHookEx בשביל למצוא ולהתבייט על Thread יחיד. כאשר הDLL הוזרק הפוגען מריץ את הקוד הזדוני שלו על גבי התהליך שSetWindowsHookEx
+קיבל את הThreadID שלו
