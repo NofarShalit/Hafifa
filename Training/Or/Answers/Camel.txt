@@ -1,0 +1,10 @@
+Camel
+
+2)The camel has been run at 14/11/2022 15:22:54.39
+
+3) Outside of self hosted connections from one process to another inside the computer,
+    there was a TCP connection to 10.0.0.6 in port 1028 with pid of 4
+
+4) The system had the following processes:
+    powershell with executionpolicy set to bypass running processes.ps1
+    psexec
