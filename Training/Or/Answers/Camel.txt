@@ -8,3 +8,6 @@ Camel
 4) The system had the following processes:
     powershell with executionpolicy set to bypass running processes.ps1
     psexec
+
+5) To stop the execution of the process we could have created a registry
+    debugger for psexec, or we could have diusbaled the ADMIN$ share
