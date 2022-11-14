@@ -10,4 +10,4 @@ Camel
     psexec
 
 5) To stop the execution of the process we could have created a registry
-    debugger for psexec, or we could have diusbaled the ADMIN$ share
+    debugger for psexec, or we could have disabled the ADMIN$ share
