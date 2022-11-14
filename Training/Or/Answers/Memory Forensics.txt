@@ -1,0 +1,45 @@
+Memory Forensics
+
+1) The RAM or Random Access Memory is the piece of hardware in the computer that stores
+    volatile information ready to be read at any time, it is the fastest memory the computer
+    have, outside of the cpu cache and gpu memory, and the computer uses it to store everything
+    it works on or opened currently, unlike with just mass storage, the RAM stores the information
+    the computer needs to function and run its current proccesses and services, the RAM loads
+    bytes to the cpu, the cpu makes calculations and return the output to the RAM, whenever we
+    need to load something new, we take it from the storage drive and load it into RAM so that
+    the computer can work with it. The entire porpuse of RAM is to be fast accessible storage for
+    the computer to store data it is working on. Storage drives like SSD or HDD will contain all
+    the information the computer have and want to keep after restarts or on power offs, the RAM
+    will store only whatever the computer needs to function and proccess and it is deleted after
+    every poweroff.
+
+2) In a memory dump we can find all of the information that was stored in the RAM.
+    We can find all of our running proccesses, drivers, network connection, etc
+    And also all of the information the computer needs to function correctly, not just function,
+    but correctly, like what permissions does the connected user have, what is there password,
+    their clipboard history, etc
+
+3) Volatility is an open source tool for analyzing RAM, it is cross platform and based on python.
+    Volatility can be used to analyze raw dumps, crush dumps, VMware and virtualbox dumps.
+    Volatility can be used to see what running proccesses were active on the computer, what DLLs they
+    were using and it can even dump those DLLs so we can investigate them, it can show us all network
+    connection active on the computer, and even what commands were run in cmd. And more.
+
+4) We can use the pslist plugin to identify what proccesses has been closed by looking at the ExitTime.
+
+5) Whenever a computer goes to Hibernation, what effectively happens is that the computer loads all of
+    its data from RAM to the Root Storage Drive at "C:\hyberfil.sys" and shutdown completely, when the
+    computer turns on next, it loads back all of its data from the "C:\hyberfil.sys" back to the RAM,
+    and by doing so it can revert back to its original state before hybernation. Its like shutting down
+    but without closing anything.
+
+6) The paging proccess is the proccess of transfering data from the RAM to the Storage Drive,
+    specifically to the "page file" file at "C:\pagefile.sys", we can control the size of the page file
+    if we want. The purpose of the pagefile is to be extra storage for the RAM when it need some, whenever
+    the RAM fills up and the user wants to open another proccess, the RAM needs to locate memory to the new
+    proccess, but it doesn't have any so it takes one of the proccesses that haven't been used recently or
+    by whatever algorithm it uses, and takes the data and transfers it to the pagefile, when it finishes
+    transfering it deletes the data from the RAM to clear space for the new process, and when a different
+    program closes and frees up memory it can if it wants, load the data back to RAM, or if the user activates
+    or wants to use the program which transfered to the storage drive, the RAM loads a different part to the pagefile,
+    and reloads the previous data it stored, in what effectively called memory swapping.

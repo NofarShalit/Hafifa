@@ -1,0 +1,9 @@
+Event Viewer Forensics
+
+1) The Event Viewer Logs are saved in "C:\Windows\System32\winevt\Logs" in the evtx file extension
+    The log file name and location information are stored in the registry. The event logs can be
+    moved to another folder to out choosing, we can effectively create a fodler wherever we want,
+    disable inheritance and give it the same permissions as the original logs folder, then we go to
+    event viewer, doubleclick -> properties on the log we want, and change the "log path" to our folder.
+
+3) We can use FullEventLogView by NirSoft and
